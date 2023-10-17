@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#login').on("click", function() {
+			let frmLogin = $('form[name=frmLogin]');
+			let id = $('input[name=user_id]').val();
+			let pw = $('input[name=user_pw]').val();
+			
+			if((id.length === 0 || id === "") || 
+			   (pw.length === 0 || pw === "")) {
+				alert("아이디와 비밀번호는 필수 입니다.");
+			} else {
+				frmLogin.attr("method", "post");
+				frmLogin.attr("action", "login");
+				frmLogin.submit();
+			}
+		});
+	});
+/* 
+	document.addEventListener("DOMContentLoaded", function() {
+		// alert("loaded");
+		document.getElementById('login').addEventListener ("click", function() {
+			// alert("loaded");
+			console.log("click");
+			let frmLogin = document.getElementsByName("frmLogin")[0];
+			let user_id = frmLogin.user_id.value;
+			let user_pw = frmLogin.user_pw.value;
+			// alert("아이디는 " + id.value + ", 비밀번호는 " + pw.value);
+
+			if ((user_id.length === 0 || user_id === "") ||
+				(user_pw.length === 0 || user_pw === "")) {
+				alert("아이디와 비밀번호는 필수입니다.");
+			} else {
+				frmLogin.method = "post";
+				frmLogin.action = "login";
+				frmLogin.submit()
+			}
+		});
+	});
+*/
+</script>
+<title>Insert title here</title>
+</head>
+<body>
+	<form name="frmLogin" method="post" action="login" encType="UTF-8">
+		아이디 : <input type="text" name="user_id"> <br>
+		비밀번호 : <input type="password" name="user_pw"> <br>
+		<input type="button" id="login" value="로그인">
+		<input type="reset" name="reset" value="다시입력">
+		<input type="hidden" name="user_address" value="대구시 수성구">
+	</form>
+</body>
+</html>

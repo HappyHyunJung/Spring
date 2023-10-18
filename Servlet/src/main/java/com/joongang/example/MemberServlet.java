@@ -1,19 +1,18 @@
 package com.joongang.example;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class MemberServlet
  */
-@WebServlet("/login")
-public class LogIn extends HttpServlet {
+@WebServlet("/member")
+public class MemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -22,6 +21,7 @@ public class LogIn extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doHandle(request, response);
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,22 +34,24 @@ public class LogIn extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		
-		String id = request.getParameter("user_id");
-		String pw = request.getParameter("user_pw");
-		String address = request.getParameter("user_address");
-		System.out.println("id = " + id + ", pw = " + pw + ", address = " + address);
-		
-//		MemberDAO dao= new MemberDAO();
-		MemberDAO2 dao2= new MemberDAO2();
-//		List<MemberVO> list = dao.listMembers();
-		List<MemberVO> list2 = new ArrayList<MemberVO>();
-		dao2.listMembers2(list2);
-		int size = list2.size();
-		for (int i = 0; i < size; i++) {
-			MemberVO vo = list2.get(i);
-			if (vo.getId().equals(id) && vo.getPwd().equals(pw)) {
-				System.out.println("id = " + id + " is logined...");
-			}
+		String command = request.getParameter("command");
+		if(command != null && command.equals("addMember")) {
+			
+			String id = request.getParameter("id");
+			String pwd = request.getParameter("pwd");
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			
+			System.out.println("command : " + command + "\nid : " + id + "\npwd : " + pwd
+					+ "\nname : " + name + "\nemail : " + email);
+			
+			MemberVO vo = new MemberVO();
+			 vo.setId(id);
+			 vo.setPwd(pwd);
+			 vo.setName(name);
+			 vo.setEmail(email);
+			 MemberDAO2 dao2 = new MemberDAO2();
+			 dao2.addMember(vo);
 		}
 	}
 }

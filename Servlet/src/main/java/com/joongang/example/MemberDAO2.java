@@ -2,7 +2,12 @@ package com.joongang.example;
 // DataSource 실습
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -22,5 +27,95 @@ public class MemberDAO2 {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<MemberVO> listMembers() {
+		List<MemberVO> list = new ArrayList<MemberVO>();
+		try {
+			con = dataFactory.getConnection();
+			System.out.println("Connection 연결 성공");
+			String query = "select * from t_member";
+			System.out.println(query);
+			pstmt = con.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String id = rs.getString("id");
+				String pwd = rs.getString("pwd");
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				Date joinDate = rs.getDate("joinDate");
+				MemberVO vo = new MemberVO();
+				vo.setId(id);
+				vo.setPwd(pwd);
+				vo.setEmail(email);
+				vo.setName(name);
+				vo.setJoinDate(joinDate);
+				list.add(vo);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
+	public void listMembers2(List<MemberVO> list2) {
+	
+		try {
+			System.out.println("listMember2 메서드 실행");
+			con = dataFactory.getConnection();
+			System.out.println("Connection 연결 성공");
+			String query = "select * from t_member";
+			System.out.println(query);
+			pstmt = con.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String id = rs.getString("id");
+				String pwd = rs.getString("pwd");
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				Date joinDate = rs.getDate("joinDate");
+				MemberVO vo = new MemberVO();
+				vo.setId(id);
+				vo.setPwd(pwd);
+				vo.setEmail(email);
+				vo.setName(name);
+				vo.setJoinDate(joinDate);
+				list2.add(vo);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addMember(MemberVO vo) {
+
+		try {
+			con = dataFactory.getConnection();
+			System.out.println("Connection 연결 성공");
+
+			String id = vo.getId();
+			String pwd = vo.getPwd();
+			String name = vo.getName();
+			String email = vo.getEmail();
+			
+			String query = "insert into t_member (id, pwd, name, email) values (?,?,?,?)";
+			System.out.println("prepareStatement : " + query);
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			pstmt.setString(3, name);
+			pstmt.setString(4, email);
+			//
+			pstmt.executeUpdate();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

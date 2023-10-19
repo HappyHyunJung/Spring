@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title> 자바스크립트에서 쿠키 사용 </title>
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		console.log("loaded");
+		let notShowPop = getCookieValue();
+		if (notShowPop !== 'true') {
+		// notShowPop이 false이면 창을 띄운다
+		// window.open("file_name") -> file_name 창을 띄운다
+			window.open("popup.html", "pop", 
+					"width=400, height=500, history=no, " +
+					"resizeable=no, status=no, scrollbars=yes,menubar=no");
+		}
+		function getCookieValue() {
+			let result = "false";
+		
+			if (document.cookie !== "") {
+				console.log(document.cookie);
+				// split(";")으로 ";"을 기준으로 나눈다 -> 나누면 array 형태로 cookie 변수에 저장된다
+				let cookie = document.cookie.split(";");  
+				for(let i = 0; i < cookie.length; i++) {
+					let element = cookie[i].split("="); // array
+					// 공백을 없앤다 -> /정규식/, '' -> /***/을 없앤다
+					let name = element[0].replace(/\s/g, '');   
+					
+					if (name === 'notShowPop') {
+						result = element[1];
+					}
+				}
+			}
+			return result;
+		}
+		document.getElementById("delete").addEventListener("click", function() {
+			document.cookie = "notShowPop=" + "false" + ";path=/;expires=-1";
+		});
+	});
+</script>
+</head>
+<body>
+	<form>
+		<input type=button value="쿠키삭제" id="delete">
+	</form>
+</body>
+</html>

@@ -1,7 +1,9 @@
 package com.joongang.example;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +36,7 @@ public class MemberServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		
+		MemberDAO2 dao2 = new MemberDAO2();
 		String command = request.getParameter("command");
 		if(command != null && command.equals("addMember")) {
 			
@@ -50,8 +53,18 @@ public class MemberServlet extends HttpServlet {
 			 vo.setPwd(pwd);
 			 vo.setName(name);
 			 vo.setEmail(email);
-			 MemberDAO2 dao2 = new MemberDAO2();
+			 
 			 dao2.addMember(vo);
+		} else if(command != null && command.equals("delMember")) {
+			
+			String id = request.getParameter("id");
+			System.out.println("command : " + command + "\nid : " + id);
+			
+			 dao2.delMember(id);
 		}
+		List<MemberVO> list = dao2.listMembers();
+		request.setAttribute("list", list);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("member.jsp");
+		dispatcher.forward(request, response);
 	}
 }

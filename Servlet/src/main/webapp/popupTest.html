@@ -3,7 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <title> 자바스크립트에서 쿠키 사용 </title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" 
+integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" 
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+// jQuery로 쿠키생성하는데 어려운 부분 - 쿠키 플러그인 링크 찾는 것이 어려웠다
+// 쿠키를 생성했는데 split()로 자르는 것이 잘 안 됐다
+/* 	$(function() {
+		console.log("loaded");
+		let notShowPop = getCookieValue();
+		if (notShowPop !== "true") {
+			window.open("popup.html", "pop",
+					"width=400,height=500,history=no, " +
+					"resizable=no,status=no,scrollbars=yes,menubar=no");
+		}
+		
+		function getCookieValue() {
+			let result = 'false';
+			//console.log($.cookie());
+			let allCookies = $.cookie();
+			$.each(allCookies, function(name, value) {
+				console.log("name: " + name + " value: " + value);
+				if (name === 'notShowPop') {
+					result = value;
+				}
+			});
+			return result;
+		}
+	}); */
+</script>
+
 <script>
+	
 	document.addEventListener("DOMContentLoaded", function() {
 		console.log("loaded");
 		let notShowPop = getCookieValue();
@@ -23,7 +56,7 @@
 				let cookie = document.cookie.split(";");  
 				for(let i = 0; i < cookie.length; i++) {
 					let element = cookie[i].split("="); // array
-					// 공백을 없앤다 -> /정규식/, '' -> /***/을 없앤다
+					// 공백을 없앤다 -> /정규식/, '' -> /\s/을 없앤다
 					let name = element[0].replace(/\s/g, '');   
 					
 					if (name === 'notShowPop') {
@@ -36,7 +69,7 @@
 		document.getElementById("delete").addEventListener("click", function() {
 			document.cookie = "notShowPop=" + "false" + ";path=/;expires=-1";
 		});
-	});
+	}); 
 </script>
 </head>
 <body>

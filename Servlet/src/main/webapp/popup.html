@@ -2,9 +2,49 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" 
+integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" 
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+	$(function() {
+		$('#noshow').on("change", function() {
+			if($(this).prop("checked")) {
+				let expireDate = new Date();
+				let days = 1;
+				expireDate.setDate(expireDate.getDate() + days);
+				$.cookie("notShowPop", "true", {path: '/', expires: expireDate});
+				window.close();
+			}
+		});
+	});
+</script>
+<script>
+/* 
+	document.addEventListener("DOMContentLoaded", function() {
+		// 체크박스 체인지 이벤트
+		document.getElementById('noshow').addEventListener("change", function() {
+			console.log("change");
+			if (this.checked === true) {
+				let expireDate = new Date();
+				let days = 1;
+				expireDate.setDate(expireDate.getDate() + days);  // 현재 날짜에 1 더한 것이 설정된다
+				document.cookie = "notShowPop=" + "true" +
+					";path=/;expires=" + expireDate.toGMTString();
+				window.close();				
+			}
+		});
+	});
+ */
+ </script>
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>오늘은 목요일이다</h1>
+	<h1>알림 팝업창입니다.</h1>
+	 <br><br><br><br><br><br><br>
+	 <!-- noshow가 선택됐을때 이벤트가 동작하게-->
+	 <form>
+	 	<input type=checkbox id="noshow"> 오늘 더 이상 팝업창 띄우지 않기
+	 </form>
 </body>
 </html>

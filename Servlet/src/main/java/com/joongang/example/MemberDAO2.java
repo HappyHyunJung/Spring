@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 public class MemberDAO2 {
 	private Connection con;
 	private PreparedStatement pstmt;
-	private DataSource dataFactory;
+	public DataSource dataFactory;
 	
 	public MemberDAO2() {
 		try {
@@ -136,5 +136,31 @@ public class MemberDAO2 {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// 입력한 id, pwd가 있는지 없는지 체크
+	public boolean isExisted(MemberVO vo) {
+		boolean result = false;
+		String id = vo.getId();
+		String pwd = vo.getPwd();
+		// 실제 값 불러오기
+		try {
+			con = dataFactory.getConnection();
+			System.out.println("Connection 연결 성공");
+			
+			String query = "SELECT DECODE(COUNT(*), 1, 'true', 'false') AS result"
+			+ " FROM t_member"
+			+ " WHERE id=? AND pwd=?";
+			System.out.println(query);
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			result = Boolean.parseBoolean(rs.getString("result"));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

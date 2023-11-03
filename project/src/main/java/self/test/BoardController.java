@@ -29,7 +29,7 @@ import oracle.jdbc.oracore.OracleTypeSINT32;
  * Servlet implementation class BoardContoller
  */
 //@WebServlet({"/board/listArticles.do", "/board/articleForm.do" ,
-//	"/board/addArticle.do", "/board/viewArticle.do"})
+//	"/board/addArticle.do", "/board/viewArticle.do", "/board/modArticle.do"})
 public class BoardController extends HttpServlet {
 	private BoardService boardService;
 	private static final String ARTICLE_IMAGE_REPO = "D:\\JAVA\\eclipse-workspace\\FileUpload";
@@ -74,7 +74,7 @@ public class BoardController extends HttpServlet {
 			String imageFileName = articleMap.get("imageFileName");
 			
 			articleVO.setParentNO(0);
-			articleVO.setId("Kang");
+			articleVO.setId("kim");
 			articleVO.setTitle(title);
 			articleVO.setContent(content);
 			articleVO.setImageFileName(imageFileName);
@@ -95,6 +95,44 @@ public class BoardController extends HttpServlet {
 			articleVO = boardService.viewArticle(Integer.parseInt(articleNO));
 			request.setAttribute("article", articleVO);
 			nextPage = "/board/viewArticle.jsp";
+			
+		} else if (path.equals("/modArticle.do")) {
+			Map<String, String> articleMap = new HashMap<String, String>();
+			upload(request, response, articleMap);
+			System.out.println("파일업로드 완료");
+			
+			int articleNO = Integer.parseInt(articleMap.get("articleNO"));
+			articleVO.setArticleNO(articleNO);
+			String title = articleMap.get("title");
+			String content = articleMap.get("content");
+			String imageFileName = articleMap.get("imageFileName");
+			
+			articleVO.setParentNO(0);
+			articleVO.setId("lee");
+			articleVO.setTitle(title);
+			articleVO.setContent(content);
+			articleVO.setImageFileName(imageFileName);
+			boardService.modArticle(articleVO);
+			
+			//이미지파일 옮기기
+			if(imageFileName != null && imageFileName.length() != 0) {
+				String originalFileName = articleMap.get("originalFileName");
+				File srcFile = new File(ARTICLE_IMAGE_REPO + "\\temp\\" + imageFileName);
+				File destDir = new File(ARTICLE_IMAGE_REPO + "\\" + articleNO);
+				destDir.mkdir();
+				FileUtils.moveToDirectory(srcFile, destDir, true);
+				File oldFile = new File(ARTICLE_IMAGE_REPO + "\\" + articleNO + "\\" + originalFileName);
+				oldFile.delete();
+			}
+			
+			// 자바
+			PrintWriter pw = response.getWriter();
+			pw.print("<script>"
+					+ " alert('수정완료');"
+					+ " location.href='" + request.getContextPath() + "/board/viewArticle.do?articleNO="
+					+ articleNO + "';"
+					+ "</script>");
+			return;
 		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);

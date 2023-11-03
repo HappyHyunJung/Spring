@@ -173,7 +173,7 @@ public class BoardDAO {
 		}
 		return vo;
 	}
-
+//  게시판 수정할 때 이미지 파일이 있으면 이미지 파일수정하고 , 이미지파일 없으면 이미지파일 수정하지 않는다 - if()
 	public void modArticle(ArticleVO vo) {
 
 		try {
@@ -204,5 +204,49 @@ public class BoardDAO {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	// 삭제한 글들의 articleNO 조회
+	public List<Integer> selectRemovedArticles(int articleNO) {
+		List<Integer> articleNOList = new ArrayList<Integer>();
+		try {
+			con = dataFactory.getConnection();
+			String query = "select articleNO from t_board "
+					+ " start with articleNO=? "
+					+ " connect by prior articleNO = parentNO";
+			System.out.println(query);
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, articleNO);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int _articleNO = rs.getInt("articleNO");
+				articleNOList.add(_articleNO);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return articleNOList;
+	}
+	
+	public void removeArticle(int articleNO) {
+		try {
+			con = dataFactory.getConnection();
+			String query = "delete from t_board "
+					+ " where articleNO in "
+					+ " (select articleNO from t_board"
+					+ " start with articleNO = ?"
+					+ " connect by prior articleNO = parentNO)";
+			System.out.println(query);
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, articleNO);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

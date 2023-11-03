@@ -27,7 +27,8 @@ import com.joongang.service.BoardService;
  * Servlet implementation class BoardContoller
  */
 @WebServlet({"/board/listArticles.do", "/board/articleForm.do" ,
-	"/board/addArticle.do", "/board/viewArticle.do", "/board/modArticle.do"})
+	"/board/addArticle.do", "/board/viewArticle.do", "/board/modArticle.do",
+	"/board/removeArticle.do"})
 public class BoardController extends HttpServlet {
 	private BoardService boardService;
 	public static final String ARTICLE_IMAGE_REPO = "D:\\JAVA\\eclipse-workspace\\FileUpload";
@@ -135,13 +136,39 @@ public class BoardController extends HttpServlet {
 				File oldFile = new File(ARTICLE_IMAGE_REPO + "\\" + articleNO + "\\" + originalFileName);
 				oldFile.delete();
 			}
-			
+			/*
 			PrintWriter pw = response.getWriter();
 			pw.print("<script>" 
 					+ "  alert('수정완료');"
 					+ "  location.href='" + request.getContextPath() +  "/board/viewArticle.do?articleNO="
 					+ articleNO + "';"
-					+ "</script>");
+					+ "</script>");  */
+			
+			response.sendRedirect(request.getContextPath() + "/board/viewArticle.do?articleNO=" + articleNO
+					+ "&modItem=true");
+			return;
+		
+		} else if (path.equals("/removeArticle.do")) {
+			int articleNO = Integer.parseInt(request.getParameter("articleNO"));  
+			// viewArticle.jsp에서 articleNO를 받아온다
+			System.out.println(articleNO);
+			List<Integer> articleNOList = boardService.removeArticle(articleNO);
+			
+			// 파일 디렉터리 삭제 ???  많이 헤매다가 스스로 해결못했으니 연습 필요
+			for(int i = 0; i < articleNOList.size(); i++) {
+				int FileNO = articleNOList.get(i);
+				File removedDir = new File(ARTICLE_IMAGE_REPO + "\\" + FileNO);
+				if(removedDir.exists()) {
+					FileUtils.deleteDirectory(removedDir);
+				}
+			}
+				
+				PrintWriter pw = response.getWriter();
+				pw.print("<script>" 
+						+ " alert('게시글이 삭제되었습니다');"
+						+ " location.href='" + request.getContextPath() + "/board/listArticles.do';"
+						+ " </script>");
+			
 			return;
 		}
 

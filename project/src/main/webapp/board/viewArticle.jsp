@@ -41,6 +41,11 @@
 			} else if (operation === "modify") {  // 수정완료 - 수정이 반영된다
 				articleForm.attr("action" , "${contextPath}/board/modArticle.do");
 				articleForm.submit();
+			} else if (operation === "remove") {   // 게시글 삭제
+				e.preventDefault(); 
+				articleForm.attr("enctype", "application/www-form-urlencoded");
+				articleForm.attr("action", "${contextPath}/board/removeArticle.do");
+				articleForm.submit();
 			}
 		});
 		
@@ -55,6 +60,16 @@
 				reader.readAsDataURL(this.files[0]);
 			}
 		});
+		
+		/* url을 바꾼다 */
+		let modItem = '<c:out value="${param.modItem}"/>';
+		if(modItem) {
+			alert("수정했습니다.");
+			let url = new URL(location.href);
+			let sp = new URLSearchParams(url.search);
+			sp.delete("modItem");
+			history.replaceState(null, null, "?" + sp.toString());
+		}
 	});
 </script>
 </head>
@@ -123,6 +138,7 @@
 			<td colspan="2" align="center">
 				<input type="button" data-oper='modify_on' value="수정하기" />  <!-- 수정 상태가 되록록 input의 disabled 상태를 없앤다 -->
 				<input type="button" data-oper='list' value="목록보기" />
+				<input type="button" data-oper='remove' value="삭제하기" />
 			</td>
 		</tr>
 	</table>	

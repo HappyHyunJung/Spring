@@ -16,6 +16,7 @@ $(function() {
 		
 		// url(~/board/listArticles.do)만 나온다  -> (?addItem=true)는 출력되지 않는다
 		history.replaceState(null, null, location.pathname);
+		//history.replaceState(null, null, "?");
 		console.log(location.pathname);
 	}
 });

@@ -31,5 +31,11 @@ public class BoardService {
 		boardDAO.modArticle(articleVO);
 		
 	}
+
+	public List<Integer> removeArticle(int articleNO) {
+		List<Integer> articleNOList = boardDAO.selectRemovedArticles(articleNO);
+		boardDAO.removeArticle(articleNO);
+		return articleNOList;  // 첨부파일이 저장된 폴더도 삭제하기 위해
+	}
 	
 }

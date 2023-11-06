@@ -1,35 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<c:set var="contextPath" value="${pageContext.request.contextPath }" />
+<%@ include file="../include/header.jsp" %>
 <!DOCTYPE html>
-<html>
 <head>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 <script>
 $(function() {
 	let addItem = '<c:out value="${param.addItem}"/>';
 	let delItem = '<c:out value="${param.delItem}"/>';
 	
+	let addMember = '<c:out value="${param.addMember}"/>';
+	let modMember = '<c:out value="${param.modMember}"/>';
+	
 	if (addItem) {
 		alert("%%새글이 추가되었습니다.");
-		
-		// url(~/board/listArticles.do)만 나온다  -> (?addItem=true)는 출력되지 않는다
-		history.replaceState(null, null, location.pathname);
-		//history.replaceState(null, null, "?");
-		console.log(location.pathname);
-		
+
+	} else if (delItem) {
+		alert("%%글이 삭제되었습니다.");
+
+	} else if (addMember) {
+		alert("%%회원가입이 완료되었습니다.");
+	
+	} else if (modMember) {
+		alert("%%회원정보가 수정되었습니다.");
 	}
-	if(delItem) {
-		alert("%%삭제되었습니다.");
-		
-		// url(~/board/listArticles.do)만 나온다  -> (?addItem=true)는 출력되지 않는다
-		history.replaceState(null, null, location.pathname);
-		//history.replaceState(null, null, "?");
-		console.log(location.pathname);
-	}
+	
+	// url(~/board/listArticles.do)만 나온다  -> (?addItem=true)는 출력되지 않는다
+	history.replaceState(null, null, location.pathname);
+	//history.replaceState(null, null, "?");
+	console.log(location.pathname);
 });
 </script>
 <style>
@@ -38,10 +37,8 @@ $(function() {
 	
 </style>
 
-<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
 
 	<table align="center" border="1" width="80%">
 		<tr height="10" align="center" bgcolor="lightgreen">
@@ -86,5 +83,4 @@ $(function() {
 	</table>
 
 <a class="cls1" href="${contextPath }/board/articleForm.do"><p class="cls2">글쓰기</p></a>
-</body>
-</html>
+<%@ include file="../include/footer.jsp" %>

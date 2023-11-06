@@ -23,7 +23,7 @@
 		
 		} else if(msg === "deleted") {
 			alert("회원정보가 삭제되었습니다.");
-		}
+		} 
 	});
 </script>
 </head>

@@ -1,6 +1,7 @@
 package com.joongang.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -9,19 +10,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.joongang.dao.MemberDAO;
+import com.joongang.domain.AuthVO;
 import com.joongang.domain.MemberVO;
 
 /**
  * Servlet implementation class MemberController
  */
 
-/*
+
 @WebServlet({"/member/listMembers.do", "/member/memberForm.do",
 	"/member/addMember.do", "/member/modMemberForm.do",
-	"/member/modMember.do", "/member/delMember.do"})
-*/
+	"/member/modMember.do", "/member/delMember.do", "/member/loginForm.do",
+	"/member/login.do", "/member/logout.do"})
+
 public class MemberController extends HttpServlet {
 	private MemberDAO memberDAO;
 
@@ -40,6 +44,7 @@ public class MemberController extends HttpServlet {
 		int index = uri.lastIndexOf("/");  // 받아온 uri의 마지막 '/' 인덱스 받아옴
 		String path = uri.substring(index);  // 받아온 인덱스에서 마지막까지 자르면 'listMembers.do'가 저장됨
 		System.out.println("path: " + path);
+		
 		if(path == null || path.equals("/listMembers.do")) {
 
 			List<MemberVO> list = memberDAO.listMembers();
@@ -55,6 +60,7 @@ public class MemberController extends HttpServlet {
 			nextPage = "/member/listMembers.jsp";
 		} else if(path.equals("/memberForm.do")) {
 			nextPage = "/member/memberForm.jsp";
+			
 		} else if(path.equals("/addMember.do")) {  //  ※  오타주의
 			// 브라우저에서 'addMembers.do'로 요청이 오면 데이터 추가
 			// 입력받은 id, 패스워드, 이름 , 이메일 을 DB에 추가
@@ -74,8 +80,16 @@ public class MemberController extends HttpServlet {
 			memberVO.setEmail(email);
 
 			memberDAO.addMember(memberVO);
+			
+			// ???
 			request.setAttribute("msg", "addMember");
-			nextPage = "/member/listMembers.do";
+			HttpSession session = request.getSession();
+			AuthVO authVO = new AuthVO();
+			authVO.setId(memberVO.getId());
+			session.setAttribute("auth", authVO);
+			response.sendRedirect(request.getContextPath() + "/index.jsp?addMember=true");
+			
+//			nextPage = "/member/listMembers.do";
 			
 		// listMembers.jsp 화면에서 수정버튼 눌렀을 때 action 이 실행된다
 		} else if(path.equals("/modMemberForm.do")) {
@@ -98,18 +112,76 @@ public class MemberController extends HttpServlet {
 			vo.setEmail(email);
 			
 			memberDAO.modMember(vo);
-			request.setAttribute("msg", "modified");
-			nextPage = "/member/listMembers.do";
+			request.setAttribute("msg", "modMember");
+			response.sendRedirect(request.getContextPath() + "/index.jsp?modMember=true");
+
+//			nextPage = "/member/listMembers.do";
+			return;
 		
 		} else if(path.equals("/delMember.do")) {
 			String _id = request.getParameter("id");
 			memberDAO.delMember(_id);
 			request.setAttribute("msg", "deleted");
 			nextPage = "/member/listMembers.do";
+	
+		} else if(path.equals("/loginForm.do")) {
+			nextPage = "/member/loginForm.jsp";
+			
+		} else if(path.equals("/login.do")) {
+			String id = request.getParameter("id");
+			String pwd = request.getParameter("pwd");
+			MemberVO vo = new MemberVO();
+			vo.setId(id);
+			vo.setPwd(pwd);
+			
+			if(memberDAO.isRegistered(vo)) {
+				HttpSession session = request.getSession();
+				AuthVO authVO = new AuthVO();
+				authVO.setId(id);
+				// ???  loginForm.jsp에서 입력된 id를 authVO 에 authVO를 session에 넣는다
+				// "auth" 키로 header.jsp에 전달되어 아이디가 출력된다
+				session.setAttribute("auth", authVO);  
+				String userURI = (String) session.getAttribute("userURI");
+
+				if (userURI != null) {
+					session.removeAttribute("userURI");
+					response.sendRedirect(userURI);
+					return;
+				}
+				response.sendRedirect(request.getContextPath() + "/index.jsp");
+				System.out.println("existed...");
+				return;
+			
+			} else {  // id, password가 다르면
+				// 다시 입력할 수 있는 상태가 되게 만든다
+				response.sendRedirect(request.getContextPath() + "/member/loginForm.do?error=true");
+				/*
+				PrintWriter out = response.getWriter();
+				out.print("<script> alert('아이디 혹은 비밀번호 입력 오류입니다'); history.go(-1); </script>");
+				out.flush();*/
+				System.out.println("not existed...");
+				return;
+			}
+		
+		} else if(path.equals("/logout.do")) {  // 로그아웃 상태
+			HttpSession session = request.getSession(false);
+			if(session != null) {
+				session.removeAttribute("auth");
+			}
+			
+			PrintWriter pw = response.getWriter();
+			pw.print("<script> alert('로그아웃 되었습니다'); "
+					+ "location.href='" + request.getContextPath() + "/index.jsp';</script>");
+			
+			// sendRedirect -> listArticles2.jsp에 파라미터 전달
+//			response.sendRedirect(request.getContextPath() + "/member/listArticles2.do");
+			return;
 		}
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
-		dispatcher.forward(request, response);
+		if(nextPage != null) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
+			dispatcher.forward(request, response);
+		}
 	}
 
 	@Override

@@ -27,10 +27,12 @@
 		$("#articleForm input").on("click", function(e) {
 			let operation = $(this).data("oper");  // input 태그의 oper 불러온다 -> 'list'
 			console.log(operation);
+			
 			if(operation === 'list' || operation === 'modify_off') {
 				e.preventDefault();  // 원래 input 태그를 눌렀을 때 form 태그의 action이 실행되는 이벤트 무시하고 이벤트 전이
 				articleForm.attr("action", "${contextPath}/board/listArticles.do");
 				articleForm.submit();
+			
 			} else if(operation === 'modify_on') {   /* 수정하기 기능 수행 */
 				$("#i_title").attr("disabled", false);
 				$("#i_content").attr("disabled", false);
@@ -38,9 +40,11 @@
 				
 				$("#tr_image_modify").show();  /* 보이지 않게 했던 버튼을 보이게 구성 */
 				$("#tr_btn_modify").show();
+			
 			} else if (operation === "modify") {  // 수정완료 - 수정이 반영된다
 				articleForm.attr("action" , "${contextPath}/board/modArticle.do");
 				articleForm.submit();
+			
 			} else if (operation === "remove") {   // 게시글 삭제
 				e.preventDefault(); 
 				articleForm.attr("enctype", "application/www-form-urlencoded");
@@ -70,6 +74,8 @@
 			sp.delete("modItem");
 			history.replaceState(null, null, "?" + sp.toString());
 		}
+		
+	
 	});
 </script>
 </head>

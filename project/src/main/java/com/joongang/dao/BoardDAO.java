@@ -207,6 +207,7 @@ public class BoardDAO {
 	}
 
 	// 삭제한 글들의 articleNO 조회
+	// articleNO의 자식 게시글까지 조회하는 쿼리
 	public List<Integer> selectRemovedArticles(int articleNO) {
 		List<Integer> articleNOList = new ArrayList<Integer>();
 		try {

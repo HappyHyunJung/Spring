@@ -29,7 +29,8 @@ import oracle.jdbc.oracore.OracleTypeSINT32;
  * Servlet implementation class BoardContoller
  */
 //@WebServlet({"/board/listArticles.do", "/board/articleForm.do" ,
-//	"/board/addArticle.do", "/board/viewArticle.do", "/board/modArticle.do"})
+//	"/board/addArticle.do", "/board/viewArticle.do", "/board/modArticle.do",
+//	"/board/removeArticle.do"})
 public class BoardController extends HttpServlet {
 	private BoardService boardService;
 	private static final String ARTICLE_IMAGE_REPO = "D:\\JAVA\\eclipse-workspace\\FileUpload";
@@ -131,6 +132,25 @@ public class BoardController extends HttpServlet {
 					+ " alert('수정완료');"
 					+ " location.href='" + request.getContextPath() + "/board/viewArticle.do?articleNO="
 					+ articleNO + "';"
+					+ "</script>");
+			return;
+		
+		} else if(path.equals("/removeArticle.do")) {
+			int articleNO = Integer.parseInt(request.getParameter("articleNO"));
+			List<Integer> articleNOList = boardService.removeArticle(articleNO);
+			
+			for(int i = 0; i < articleNOList.size(); i++) {
+				int FileNO = articleNOList.get(i);
+				
+				File removeDir = new File(ARTICLE_IMAGE_REPO+"\\"+FileNO);
+				if(removeDir.exists()) {
+					FileUtils.deleteDirectory(removeDir);
+				}
+			}
+			PrintWriter pw = response.getWriter();
+			pw.print("<script>" 
+					+ " alert('게시글이 삭제되었습니다');"
+					+ " location.href='" + request.getContextPath() + "/board/listArticles.do';"
 					+ "</script>");
 			return;
 		}

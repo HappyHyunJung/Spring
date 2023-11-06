@@ -28,7 +28,7 @@ import com.joongang.service.BoardService;
  */
 @WebServlet({"/board/listArticles.do", "/board/articleForm.do" ,
 	"/board/addArticle.do", "/board/viewArticle.do", "/board/modArticle.do",
-	"/board/removeArticle.do"})
+	"/board/removeArticle.do", "/board/listArticles2.do"})
 public class BoardController extends HttpServlet {
 	private BoardService boardService;
 	public static final String ARTICLE_IMAGE_REPO = "D:\\JAVA\\eclipse-workspace\\FileUpload";
@@ -148,6 +148,8 @@ public class BoardController extends HttpServlet {
 					+ "&modItem=true");
 			return;
 		
+		// 게시글을 삭제해야 하므로 삭제 게시글을 특정하는 articleNO가 있을 것이다
+		// viewArticle.jsp에서 articleNO를 받아온다
 		} else if (path.equals("/removeArticle.do")) {
 			int articleNO = Integer.parseInt(request.getParameter("articleNO"));  
 			// viewArticle.jsp에서 articleNO를 받아온다
@@ -162,15 +164,23 @@ public class BoardController extends HttpServlet {
 					FileUtils.deleteDirectory(removedDir);
 				}
 			}
-				
+				/*
 				PrintWriter pw = response.getWriter();
 				pw.print("<script>" 
 						+ " alert('게시글이 삭제되었습니다');"
 						+ " location.href='" + request.getContextPath() + "/board/listArticles.do';"
-						+ " </script>");
+						+ " </script>");*/
+			response.sendRedirect(request.getContextPath() + "/board/listArticles.do?" + "&delItem=true");
 			
 			return;
-		}
+		} else if(path == null || path.equals("/listArticles2.do")) {
+			// 게시판 목록 보여주기
+//				request.setAttribute("articlesList", boardService.listArticles()) ;   // 동작가능
+				articlesList = boardService.listArticles();
+				request.setAttribute("articlesList", articlesList);
+				nextPage = "/board/listArticles2.jsp";
+			
+			}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
 		dispatcher.forward(request, response);

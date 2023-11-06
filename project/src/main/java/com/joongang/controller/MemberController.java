@@ -62,7 +62,7 @@ public class MemberController extends HttpServlet {
 			nextPage = "/member/memberForm.jsp";
 			
 		} else if(path.equals("/addMember.do")) {  //  ※  오타주의
-			// 브라우저에서 'addMembers.do'로 요청이 오면 데이터 추가
+			// 브라우저에서 'addMembers.do'로 요청이 오면 회원 데이터 추가
 			// 입력받은 id, 패스워드, 이름 , 이메일 을 DB에 추가
 			// ??? 입력받은 데이터를 불러오고 MemberVO에 저장
 			// ??? addMember()가 매개변수가 필요한지 생각하기
@@ -138,7 +138,7 @@ public class MemberController extends HttpServlet {
 				HttpSession session = request.getSession();
 				AuthVO authVO = new AuthVO();
 				authVO.setId(id);
-				// ???  loginForm.jsp에서 입력된 id를 authVO 에 authVO를 session에 넣는다
+				// ???  loginForm.jsp에서 입력된 id를 authVO 에 설정하고 authVO를 session에 넣는다
 				// "auth" 키로 header.jsp에 전달되어 아이디가 출력된다
 				session.setAttribute("auth", authVO);  
 				String userURI = (String) session.getAttribute("userURI");
@@ -163,7 +163,7 @@ public class MemberController extends HttpServlet {
 				return;
 			}
 		
-		} else if(path.equals("/logout.do")) {  // 로그아웃 상태
+		} else if(path.equals("/logout.do")) {  // 로그아웃 상태 -> session 삭제
 			HttpSession session = request.getSession(false);
 			if(session != null) {
 				session.removeAttribute("auth");

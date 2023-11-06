@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -21,6 +22,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
 import com.joongang.domain.ArticleVO;
+import com.joongang.domain.AuthVO;
 import com.joongang.service.BoardService;
 
 /**
@@ -28,7 +30,7 @@ import com.joongang.service.BoardService;
  */
 @WebServlet({"/board/listArticles.do", "/board/articleForm.do" ,
 	"/board/addArticle.do", "/board/viewArticle.do", "/board/modArticle.do",
-	"/board/removeArticle.do", "/board/listArticles2.do"})
+	"/board/removeArticle.do", "/board/replyForm.do"})
 public class BoardController extends HttpServlet {
 	private BoardService boardService;
 	public static final String ARTICLE_IMAGE_REPO = "D:\\JAVA\\eclipse-workspace\\FileUpload";
@@ -57,7 +59,7 @@ public class BoardController extends HttpServlet {
 //			request.setAttribute("articlesList", boardService.listArticles()) ;   // 동작가능
 			articlesList = boardService.listArticles();
 			request.setAttribute("articlesList", articlesList);
-			nextPage = "/board/listArticles.jsp";
+			nextPage = "/board/listArticles2.jsp";
 		
 		} else if(path.equals("/articleForm.do")) {
 			nextPage = "/board/articleForm.jsp";
@@ -73,10 +75,16 @@ public class BoardController extends HttpServlet {
 			String imageFileName = articleMap.get("imageFileName");
 			System.out.println(title  + "\t" + content + "\t" + imageFileName);
 			
+			// session 에 저장된 id 불러오기 -> session 객체 불러오기 
+			// -> session에 저장된 "auth"를 불러오기 AuthVO 타입에 저장
+//			HttpSession session = request.getSession(false);
+//			AuthVO authVO = (AuthVO) session.getAttribute("auth");
+//			String id = authVO.getId();
+			
 			// id를 'lee'가 아닌 choi, kang으로 바꾸면 오류가 난다 - db에 저장된 id만 글쓰기가 된다
 			// t_board id 속성이 t_member의 id 속성과 외래키로 연관되기 때문
 			articleVO.setParentNO(0);
-			articleVO.setId("lee");
+			articleVO.setId(getIdFromSession(request));
 			articleVO.setTitle(title);
 			articleVO.setContent(content);
 			articleVO.setImageFileName(imageFileName);
@@ -103,7 +111,7 @@ public class BoardController extends HttpServlet {
 			articleVO = boardService.viewArticle(Integer.parseInt(articleNO));
 			System.out.println("articleVO\t" + articleVO.getArticleNO());
 			request.setAttribute("article", articleVO);
-			nextPage = "/board/viewArticle.jsp";
+			nextPage = "/board/viewArticle2.jsp";
 		
 		} else if(path.equals("/modArticle.do")) {   // 게시글 수정
 			Map<String, String> articleMap = new HashMap<String,String>();
@@ -120,7 +128,7 @@ public class BoardController extends HttpServlet {
 			// id를 'lee'가 아닌 choi, kang으로 바꾸면 오류가 난다 - db에 저장된 id만 글쓰기가 된다
 			// t_board id 속성이 t_member의 id 속성과 외래키로 연관되기 때문
 			articleVO.setParentNO(0);
-			articleVO.setId("lee");
+			articleVO.setId(getIdFromSession(request));
 			articleVO.setTitle(title);
 			articleVO.setContent(content);
 			articleVO.setImageFileName(imageFileName);
@@ -173,14 +181,15 @@ public class BoardController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/board/listArticles.do?" + "&delItem=true");
 			
 			return;
-		} else if(path == null || path.equals("/listArticles2.do")) {
-			// 게시판 목록 보여주기
-//				request.setAttribute("articlesList", boardService.listArticles()) ;   // 동작가능
-				articlesList = boardService.listArticles();
-				request.setAttribute("articlesList", articlesList);
-				nextPage = "/board/listArticles2.jsp";
-			
-			}
+		
+		} else if (path.equals("/replyForm.do")) {
+			int parentNO = Integer.parseInt(request.getParameter("parentNO"));
+			String writer = request.getParameter("writer");
+			HttpSession session = request.getSession(true);
+			session.setAttribute("parentNO", parentNO);
+			session.setAttribute("writer", writer);
+			nextPage = "/board/replyForm.jsp";
+		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
 		dispatcher.forward(request, response);
@@ -224,6 +233,16 @@ public class BoardController extends HttpServlet {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private String getIdFromSession(HttpServletRequest request) {
+		String retValue = "";
+		HttpSession session = request.getSession(true);
+		AuthVO auth = (AuthVO) session.getAttribute("auth");
+		if(auth != null) {
+			retValue = auth.getId();
+		}
+		return retValue;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

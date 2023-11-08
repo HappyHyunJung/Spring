@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
-<c:redirect url="/board/listArticles2.do" context="${contextPath }" >  
+<c:redirect url="/board/listArticles.do" context="${contextPath }" >  
 	<c:param name="addMember" value="${param.addMember }"/>
 	<c:param name="modMember" value="${param.modMember }"/>
 </c:redirect>

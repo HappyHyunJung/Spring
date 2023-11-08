@@ -12,17 +12,22 @@ $(function() {
 	let addMember = '<c:out value="${param.addMember}"/>';
 	let modMember = '<c:out value="${param.modMember}"/>';
 	
+	let addReply = '<c:out value="${param.addReply}"/>';
+	
 	if (addItem) {
-		alert("%%새글이 추가되었습니다.");
+		alert("%%새글이 추가되었습니다");
 
 	} else if (delItem) {
-		alert("%%글이 삭제되었습니다.");
+		alert("%%글이 삭제되었습니다");
 
 	} else if (addMember) {
-		alert("%%회원가입이 완료되었습니다.");
+		alert("%%회원가입이 완료되었습니다");
 	
 	} else if (modMember) {
-		alert("%%회원정보가 수정되었습니다.");
+		alert("%%회원정보가 수정되었습니다");
+
+	} else if (addReply) {
+		alert("%%댓글이 추가되었습니다");
 	}
 	
 	// url(~/board/listArticles.do)만 나온다  -> (?addItem=true)는 출력되지 않는다

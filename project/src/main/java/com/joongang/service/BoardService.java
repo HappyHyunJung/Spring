@@ -38,5 +38,10 @@ public class BoardService {
 		return articleNOList;  
 		// 첨부파일이 저장된 폴더도 삭제하기 위해 articleNOList 반환
 	}
+
+	public int addReply(ArticleVO articleVO) {
+		
+		return boardDAO.addArticle(articleVO);
+	}
 	
 }

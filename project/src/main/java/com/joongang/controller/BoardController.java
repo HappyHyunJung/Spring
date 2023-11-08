@@ -30,7 +30,8 @@ import com.joongang.service.BoardService;
  */
 @WebServlet({"/board/listArticles.do", "/board/articleForm.do" ,
 	"/board/addArticle.do", "/board/viewArticle.do", "/board/modArticle.do",
-	"/board/removeArticle.do", "/board/replyForm.do"})
+	"/board/removeArticle.do", "/board/replyForm.do", "/board/addReply.do"})
+
 public class BoardController extends HttpServlet {
 	private BoardService boardService;
 	public static final String ARTICLE_IMAGE_REPO = "D:\\JAVA\\eclipse-workspace\\FileUpload";
@@ -188,7 +189,45 @@ public class BoardController extends HttpServlet {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("parentNO", parentNO);
 			session.setAttribute("writer", writer);
+			
 			nextPage = "/board/replyForm.jsp";
+		
+		} else if (path.equals("/addReply.do")) {
+			HttpSession session = request.getSession();
+			
+			// parentNO 가져오기
+			int parentNO = (Integer) (session.getAttribute("parentNO")); 
+			session.removeAttribute("parentNO");
+			// parameter, file
+			Map<String, String> articleMap = new HashMap<String, String>();
+			upload(request, response, articleMap);
+			String title = articleMap.get("title");
+			String content = articleMap.get("content");
+			String imageFileName = articleMap.get("imageFileName");
+			
+			// articleVO set
+			articleVO.setParentNO(parentNO);
+			articleVO.setId(getIdFromSession(request));
+			articleVO.setTitle(title);
+			articleVO.setContent(content);
+			articleVO.setImageFileName(imageFileName);
+			
+			// boardService.addReply()
+			int articleNO = boardService.addReply(articleVO);
+			
+			// image 폴더 만들어서 이동
+			if (imageFileName != null && imageFileName.length() != 0) {
+				File srcFile = new File(ARTICLE_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+				File destDir = new File(ARTICLE_IMAGE_REPO + "\\" + articleNO);
+				destDir.mkdir();
+				FileUtils.moveFileToDirectory(srcFile, destDir, true);
+			}
+			
+//			PrintWriter out = response.getWriter();
+//			out.print("<script> alert('답글을 추가했습니다'); location.href='" + request.getContextPath() +
+//					"/board/viewArticle.do?articleNO="+articleNO+"';" + "</script>");
+			response.sendRedirect(request.getContextPath() + "/board/listArticles.do?addReply=true");
+			return;
 		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);

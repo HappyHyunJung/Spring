@@ -134,7 +134,7 @@ public class MemberController extends HttpServlet {
 			vo.setId(id);
 			vo.setPwd(pwd);
 			
-			if(memberDAO.isRegistered(vo)) {
+			if(memberDAO.isRegistered(vo)) {// 로그인된 회원이 가입되었는지 db에서 확인
 				HttpSession session = request.getSession();
 				AuthVO authVO = new AuthVO();
 				authVO.setId(id);
@@ -155,14 +155,14 @@ public class MemberController extends HttpServlet {
 			} else {  // id, password가 다르면
 				// 다시 입력할 수 있는 상태가 되게 만든다
 				response.sendRedirect(request.getContextPath() + "/member/loginForm.do?error=true");
-				/*
-				PrintWriter out = response.getWriter();
-				out.print("<script> alert('아이디 혹은 비밀번호 입력 오류입니다'); history.go(-1); </script>");
-				out.flush();*/
+				
+//				PrintWriter out = response.getWriter();
+//				out.print("<script> alert('아이디 혹은 비밀번호 입력 오류입니다'); history.go(-1); </script>");
+//				out.flush();
 				System.out.println("not existed...");
 				return;
-			}
-		
+			} 
+			
 		} else if(path.equals("/logout.do")) {  // 로그아웃 상태 -> session 삭제
 			HttpSession session = request.getSession(false);
 			if(session != null) {

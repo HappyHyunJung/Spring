@@ -1,5 +1,11 @@
 package com.joongang.domain;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class RegisterRequest {
 	private String email;
 	private String name;
@@ -13,30 +19,7 @@ public class RegisterRequest {
 		this.pwd = pwd;
 		this.cfpwd = cfpwd;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getPwd() {
-		return pwd;
-	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
-	public String getCfpwd() {
-		return cfpwd;
-	}
-	public void setCfpwd(String cfpwd) {
-		this.cfpwd = cfpwd;
-	}
+	
 	
 	
 }

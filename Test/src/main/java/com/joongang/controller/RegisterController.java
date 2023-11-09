@@ -18,16 +18,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.joongang.domain.RegisterRequest;
 import com.joongang.service.MemberRegisterService;
 
+import lombok.AllArgsConstructor;
+
 @Controller
 @RequestMapping("/register/*")
+//@AllArgsConstructor
 public class RegisterController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	private MemberRegisterService memberRegisterService;
 		
-	@Autowired
-	public RegisterController(MemberRegisterService memberRegisterService) {
-		this.memberRegisterService = memberRegisterService;
-	}
+//	@Autowired
+//	public RegisterController(MemberRegisterService memberRegisterService) {
+//		this.memberRegisterService = memberRegisterService;
+//	}
 	
 	/**
 	 * Simply selects the home view to render by returning its name.

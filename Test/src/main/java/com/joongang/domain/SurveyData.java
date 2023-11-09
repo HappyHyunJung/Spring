@@ -1,13 +1,19 @@
 package com.joongang.domain;
 
-public class SurvayData {
-	String fruits;
-	String movie_genre;
-	String alcohol_type;
-	String area;
-	String age;
+import java.util.List;
+
+public class SurveyData {
+	private String fruits;
+	private String movie_genre;
+	private String alcohol_type;
+	private String area;
+	private String age;
 	
-	public SurvayData(String fruits, String movie_genre, String alcohol_type, String area, String age) {
+	// main.jsp 에 결과 출력
+	private List<String> titles;
+	private List<String> responses;
+	
+	public SurveyData(String fruits, String movie_genre, String alcohol_type, String area, String age) {
 		this.fruits = fruits;
 		this.movie_genre = movie_genre;
 		this.alcohol_type = alcohol_type;
@@ -55,11 +61,28 @@ public class SurvayData {
 		this.age = age;
 	}
 
+	public List<String> getTitles() {
+		return titles;
+	}
+
+	public void setTitles(List<String> titles) {
+		this.titles = titles;
+	}
+
+	public List<String> getResponses() {
+		return responses;
+	}
+
+	public void setResponses(List<String> responses) {
+		this.responses = responses;
+	}
+
 	@Override
 	public String toString() {
-		return "SurvayData [fruits=" + fruits + ", movie_genre=" + movie_genre + ", alcohol_type=" + alcohol_type
-				+ ", area=" + area + ", age=" + age + "]";
+		return "SurveyData [titles=" + titles + ", responses=" + responses + "]";
 	}
+
+	
 	
 	
 }

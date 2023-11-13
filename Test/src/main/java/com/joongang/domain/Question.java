@@ -34,7 +34,7 @@ public class Question {
 		this.options = options;
 	}
 
-	// SurveyService 에서 응답자 위치를 받을 때, boolean  
+	// SurveyService 에서 응답자 위치를 받을 때, 옵션이 있는지 없는지로 나누기 위해 사용 
 	public boolean isChoice() {
 		return options != null && !options.isEmpty();
 	}

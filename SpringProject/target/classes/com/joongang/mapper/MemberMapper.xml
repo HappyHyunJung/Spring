@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joongang.mapper.MemberMapper">
+	<select id="getTime2" resultType="string">
+		SELECT sysdate FROM dual
+	</select>
+	
+	<insert id="insert">
+		insert into tbl_member (userid, username, userpw, location, gender) 
+			values (#{userid}, #{username}, #{userpw}, #{location}, #{gender})
+	</insert>
+</mapper>
+

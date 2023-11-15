@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@include file="../includes/header.jsp"%>
 
+<link rel="stylesheet" href="/resources/css/signupMain.css">
+
+<%@include file="../includes/header.jsp"%>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	  $(function () {
@@ -237,7 +239,7 @@
                 </button>
             </div>
         </form>
-    </div>
+    </div>  <!-- main_body  종료 -->
 </div>
 
 <%@include file="../includes/footer.jsp" %>

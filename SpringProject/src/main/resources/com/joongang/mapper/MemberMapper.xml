@@ -11,5 +11,9 @@
 		insert into tbl_member (userid, username, userpw, location, gender) 
 			values (#{userid}, #{username}, #{userpw}, #{location}, #{gender})
 	</insert>
+	
+	<select id="selectMemberByUserid" resultType="com.joongang.domain.MemberVO">
+		select * from tbl_member where userid=#{userid}
+	</select>
 </mapper>
 

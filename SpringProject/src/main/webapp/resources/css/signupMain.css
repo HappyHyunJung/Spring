@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+a {
+    text-decoration: none;
+}
+ul {
+    list-style-type: none;
+}
+
+.main_body {
+	margin: 0px auto;
+	width: 990px;
+	
+	padding-top: 20px;
+}
+
+.wrap__title {
+	font-size: 25px;
+	color: #db8424;
+}
+
+.main__input {
+	margin-top: 20px;
+	width:990px;
+	height: 35px;
+}
+
+.wrap__phone {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width:990px;
+	height: 35px;
+}
+
+.phone__input {
+	height: 30px;
+	width: 318px;
+}
+
+.wrap__auth{
+	
+}

@@ -29,11 +29,13 @@
 			}
 		});
 		
-		$("#signup_button").on("click", function (e) {
+		$("#signup__button").on("click", function (e) {
 			e.preventDefault();
-			if (isValid()) {
+			 if (isValid()) {
+				 console.log("signup__button");
 				$("form").submit();
-			}
+			} 
+		
 		});
 		
 		function isValid() {
@@ -42,8 +44,8 @@
 			const password1 = $("#pw1").val();
 			const password2 = $("#pw2").val();
 			const location = $("#location").val();
-			const genderWoman = $("#gender_woman").is(":checked");
-			const genderman = $("#gender_man").is(":checked");
+			const genderWoman = $("#gender__woman").is(":checked");
+			const genderMan = $("#gender__man").is(":checked");
 			
 			$("#error__email").text("");
 			$("#error__name").text("");
@@ -56,56 +58,68 @@
 			if (regExp.test(userid) === false) {
 				$("#error__email").text("이메일이 올바르지 않습니다");
 				$("#userid").focus();
+				console.log("emailerror");
 				return false;
 			}
 			if (username === "") {
 				$("#error__name").text("이름이 올바르지 않습니다");
 				$("#username").focus();
+				console.log("name__error");
 				return false;
 			}
 			if (password1 === "") {
 				$("#error__password1").text("비밀번호를 입력해 주세요");
 				$("#pw1").focus();
+				console.log("pass error");
 				return false;
 			}
 			if (password2 === "") {
 				$("#error__password2").text("비밀번호를 입력해주세요");
 				$("#pw2").focus();
+				console.log("pass error2");
 				return false;
 			}
 			if (password1 !== password2) {
 				$("#error__password1").text("비밀번호가 일치하지 않습니다");
 				$("#error__password2").text("비밀번호가 일치하지 않습니다");
 				$("#pw2").focus();
+				console.log("비밀번호비교 error");
 				return false;
 			}
 			const validLocations = ["서울", "경기도", "인천", "대전", "광주", "대구", "부산", "울산", "충청도", "강원도", "전라도", "제주도"];
 			if (!validLocations.includes(location)) {
 				$("#error__location").text("지역을 선택해 주세요");
 				$("#location").focus();
+				console.log("locate error");
 				return false;
 			}
 			if (genderWoman === false && genderMan === false) {
 				$("#error__gender").text("성별을 선택해 주세요");
 				$("#gender_woman").focus();
+				console.log("gender error");
 				return false;
 			}
 			return true;
 		}
-		  
+		
 		$("#send").on("click", function (e) {
 			getToken();
 		});
 			
 		$("#finished").on("click", function (e) {
 			getTimerIntervalConfirm();
+			console.log("confirm")
 		});
 		
 		function getToken() {
 			const token = String(Math.floor(Math.random()*1000000)).padStart(6, "0");
+			console.log(1);
 			$("#token").text(token);
+			$("#send").attr("style", "background-color: #FFFFFF; cursor: default;");
 			$("#send").attr("disabled", true);
+			$("#finished").attr("style", "background-color: #0068FF; color: #FFFFFF; cursor: pointer;");
 			$("#finished").attr("disabled", false);
+			console.log(100);
 			getTimerInterval();
 		}
 		
@@ -133,12 +147,14 @@
 		
 		function getTimerIntervalConfirm() {
 			clearInterval(interval)
+			console.log("start");
 			$("#finished").attr("style", "background-color: #FFFFFF; cursor: default;");
 			$("#finished").attr("disabled", true);
 			$("#finished").text("인증완료");
 			alert("인증이 완료되었습니다");
-			$("#signup_button").attr("style", "background-color: #FFFFFF; color: #2C3639; border: 1px solid #2C3639; cursor: pointer;");
-			$("#signup_button").attr("disabled", true);
+			$("#signup__button").attr("style", "background-color: #FFFFFF; color: #2C3639; border: 1px solid #2C3639; cursor: pointer;");
+			$("#signup__button").attr("disabled", false);
+			console.log("end");
 			
 		}
 	});  

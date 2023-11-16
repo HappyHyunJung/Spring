@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+a {
+    text-decoration: none;
+}
+ul {
+    list-style-type: none;
+}
+
+.wrapped_login {
+	margin: 0px auto;
+	width: 990px;
+	height: 500px;
+	vertical-align: middle;
+	position: relative;
+	
+}
+
+form {
+	width: 200px;
+	height: 350px;
+	margin: auto;
+	display: block;
+	margin-top : 150px;
+	vertical-align: middle;
+}
+
+.form_id :first-child {
+	display: block;
+	color: #b700b7;
+	font-weight: bolder;
+}
+
+.form_pw :first-child {
+	display: block;
+	color: #b700b7;
+	font-weight: bolder;
+}
+.id_control {
+	width: 200px;
+	height: 30px;
+}
+
+.pw_control {
+	width: 200px;
+	height: 30px;
+}
+
+.login_button {
+	width: 200px;
+	height: 25px;
+}

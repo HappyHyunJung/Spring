@@ -20,16 +20,21 @@
 				<div class="wrapper_title">
 					<span>Spring project</span>
 				</div>
+				<div class="wrapper_sub">
+					<c:if test="${!empty auth }">
+						<span style="font-weight: bolder; margin-left: 100px;"><c:out value="${auth.username }"></c:out>님 접속중입니다</span>
+					</c:if>
+				</div>
 				<nav class="wrapper_menu">
 					<div class="menu-item-con">
 						<a href="/board/list"><span class="menu-item">게시판</a>
-						<a href="/member/signup"><span class="menu-item">회원가입</a>
 						<c:choose>
 						<c:when test="${empty auth }">  <!-- 로그인이 안 된 경우 -->
 							<a href = "/member/signup"><span class="menu-item">회원가입</span></a>
 							<a href = "/member/login"><span class="menu-item">로그인</span></a>
 						</c:when>
 						<c:otherwise>
+							<a href = "/member/signup"><span class="menu-item">회원가입</span></a>
 							<a href="/member/logout"><span class="menu-item">로그아웃</span></a>
 						</c:otherwise>
 						</c:choose>					

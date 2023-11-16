@@ -31,7 +31,7 @@ ul {
 
 .wrap__phone {
 	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-bottom: 13px;
 	width:990px;
 	height: 35px;
 }
@@ -41,6 +41,53 @@ ul {
 	width: 318px;
 }
 
-.wrap__auth{
+.wrap__auth {
+	position: relative;
+	height: 30px;
+}
+
+
+#auth__target {
+	position: absolute; right: 0px; 
+}
+
+#auth__timer {
+	margin-top: 5px ;
+	position: absolute; right: 0px;	
+}
+
+.auth_button {
+	width: 100px;
+	margin-left: 10px;
+}
+
+#location {
+	width: 990px;
+	height: 30px;
+	margin: 15px 0px;
+}
+
+.wrap__radio {
+	width: 990px;
+	margin:0px 0px 15px 0px;
+	display: flex;
+}
+
+.wrap__radio > div {
+	display: inline-flex;
+	margin: 0px auto;
+}
+
+.wrap__confirm {
+	margin: 25px auto;
+	
+}
+
+#signup__button {
+	width: 990px;
+	height: 50px;
+	margin: auto;
+	display: block;
+	
 	
 }

@@ -1,7 +1,9 @@
 package com.joongang.controller;
 
+
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +16,11 @@ import com.joongang.domain.MemberVO;
 import com.joongang.service.MemberService;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 
 @Controller
 @RequestMapping("/member/*")
+@Log4j2
 public class MemberController {
 	@Setter(onMethod_ = @Autowired)
 	private MemberService memberService;
@@ -27,8 +31,22 @@ public class MemberController {
 	}
 	
 	@PostMapping("/signup")
-	public String signupSubmit (MemberVO vo) {
+	public String signupSubmit (MemberVO vo, HttpSession session, RedirectAttributes attr) {
+		// 암호화 되기 전 비밀번호를 따로 저장해야 한다  
+		// 따로 저장하지 않으면 authenticate() 매개변수 vo의 비밀번호가 암호된 비밀번호가 들어가서 오류가 된다 
+		String rawpw = vo.getUserpw();
+		log.info("$$$ my rawpw is " + rawpw);
 		memberService.signup(vo);
+		log.info("$$$ my encodedpw is " + vo.getUserpw());
+		
+		try {
+			vo.setUserpw(rawpw);
+			AuthVO authVO = memberService.authenticate(vo);
+			session.setAttribute("auth", authVO);
+
+		} catch (Exception e) {
+			
+		}
 		return "redirect:/";
 	}
 	
@@ -39,9 +57,9 @@ public class MemberController {
 	
 	@PostMapping("/login")
 	public String loginSubmit (MemberVO vo, HttpSession session, RedirectAttributes attr) {
-		AuthVO authVO;
+
 		try {
-			authVO = memberService.authenticate(vo);
+			AuthVO authVO = memberService.authenticate(vo);
 			// session에 authVO를 추가한다 ???
 			session.setAttribute("auth", authVO);
 			String userURI = (String)session.getAttribute("userURI");   // 필터에서 userURI를 받는다

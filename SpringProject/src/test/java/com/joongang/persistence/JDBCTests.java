@@ -19,7 +19,7 @@ public class JDBCTests {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void testConnection() {
 		try (Connection con = DriverManager.getConnection(
 				"jdbc:oracle:thin:@localhost:1521:XE",

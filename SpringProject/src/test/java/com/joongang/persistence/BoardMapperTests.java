@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.joongang.domain.MemberVO;
-import com.joongang.mapper.MemberMapper;
+import com.joongang.domain.BoardVO;
+import com.joongang.mapper.BoardMapper;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -16,19 +16,17 @@ import lombok.extern.log4j.Log4j2;
 @ContextConfiguration(classes = {com.joongang.config.RootConfig.class,
 		com.joongang.config.SecurityConfig.class})
 @Log4j2
-public class MemberMapperTests {
-	
-	@Setter (onMethod_ = @Autowired)
-	private MemberMapper map;
-	
-//	@Test
-	public void testInsert() {
-		MemberVO vo = new MemberVO();
-		vo.setUserid("sky100");
-		vo.setUsername("하늘11");
-		vo.setUserpw("12311");
-		vo.setLocation("제주11");
-		vo.setGender("남11");
-		map.insert(vo);
-	}
+public class BoardMapperTests {
+
+		@Setter (onMethod_ = @Autowired) 
+		private BoardMapper boardMapper;
+		
+//		@Test
+		public void testBoardInsert() {
+			BoardVO bvo = new BoardVO();
+			bvo.setTitle("오늘은");
+			bvo.setContent("오늘은 평범한 일상이다");
+			bvo.setWriter("최현정");
+			boardMapper.insert(bvo);
+		}
 }

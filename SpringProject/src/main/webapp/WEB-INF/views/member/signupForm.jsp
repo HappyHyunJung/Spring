@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <link rel="stylesheet" href="/resources/css/signupMain.css">
+<link rel="stylesheet" href="/resources/css/headfoot.css">
 
 <%@include file="../includes/header.jsp"%>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>

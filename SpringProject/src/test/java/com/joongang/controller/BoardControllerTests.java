@@ -1,6 +1,5 @@
 package com.joongang.controller;
 
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +21,7 @@ import lombok.extern.log4j.Log4j2;
 		com.joongang.config.ServletConfig.class,
 		com.joongang.config.SecurityConfig.class})
 @Log4j2
-public class MemberControllerTests {
+public class BoardControllerTests {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private WebApplicationContext context;
@@ -35,11 +34,11 @@ public class MemberControllerTests {
 	}
 	
 //	@Test
-	public void testSignup() throws Exception {
-		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/member/signup")
-				.param("userid", "sky").param("username", "하늘")
-				.param("userpw", "123").param("location", "대구")
-				.param("gender", "남성"))
+	public void testRegister() throws Exception {
+		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/board/register")
+				.param("title", "ControllerTest")
+				.param("content", "ControllerController")
+				.param("writer", "wr"))
 				.andReturn()
 				.getModelAndView()
 				.getViewName();

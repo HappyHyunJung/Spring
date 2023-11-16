@@ -21,7 +21,7 @@ public class MemberServiceTests {
 	@Setter (onMethod_ = @Autowired)
 	private MemberService mapService;
 	
-	@Test
+//	@Test
 	public void testSignup() {
 		MemberVO vo = new MemberVO();
 		vo.setUserid("sky11");

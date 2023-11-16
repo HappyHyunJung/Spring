@@ -22,7 +22,8 @@ public class MemberService {
 	private PasswordEncoder pwencoder;
 	
 	public void signup (MemberVO vo) {
-		vo.setUserpw(pwencoder.encode(vo.getUserpw()));
+		
+		vo.setUserpw(pwencoder.encode(vo.getUserpw()));  // 입력된 비밀번호 암호화
 		mapper.insert(vo);
 	}
 	

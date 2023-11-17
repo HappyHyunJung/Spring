@@ -26,4 +26,17 @@ public class BoardService {
 		public List<BoardVO> getList() {
 			return boardMapper.getList();
 		} 
+		
+		public BoardVO get(Long bno) {
+			return boardMapper.read(bno);
+		}
+
+		/*
+		 * public boolean modify(BoardVO vo) { boolean chk = false; if
+		 * (boardMapper.update(vo) != null) { chk = true; }
+		 * 
+		 * return chk;
+		 * 
+		 * }
+		 */
 }

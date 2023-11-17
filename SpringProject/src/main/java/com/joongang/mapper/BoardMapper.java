@@ -8,4 +8,6 @@ public interface BoardMapper {
 	
 	public void insert(BoardVO vo);
 	public List<BoardVO> getList();
+	public BoardVO read(Long bno);
+	public Integer update(BoardVO vo);
 }

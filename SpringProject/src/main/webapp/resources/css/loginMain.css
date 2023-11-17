@@ -18,14 +18,16 @@ ul {
 	vertical-align: middle;
 	position: relative;
 	
+
 }
 
 form {
-	width: 200px;
+	width: 500px;
 	height: 350px;
 	margin: auto;
-	display: block;
 	margin-top : 150px;
+	align-items: center;
+	justify-content: center;
 	vertical-align: middle;
 }
 
@@ -39,18 +41,25 @@ form {
 	display: block;
 	color: #b700b7;
 	font-weight: bolder;
+	margin-top: 20px;
 }
 .id_control {
-	width: 200px;
-	height: 30px;
+	width: 500px;
+	height: 39px;
 }
 
 .pw_control {
-	width: 200px;
-	height: 30px;
+	width: 500px;
+	height: 39px;
 }
 
 .login_button {
-	width: 200px;
-	height: 25px;
+	width: 500px;
+	height: 35px;
+	margin-top: 20px;
+	background-color: black;
+	color: white;
+	font-size: 20px;
+	font-weight: bolder;
 }
+

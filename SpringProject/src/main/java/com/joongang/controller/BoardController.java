@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joongang.domain.BoardVO;
+import com.joongang.domain.Criteria;
+import com.joongang.domain.PageDTO;
 import com.joongang.service.BoardService;
 
 import lombok.Setter;
@@ -37,14 +39,6 @@ public class BoardController {
 			return "redirect:/board/list";
 		}
 		
-		@GetMapping("/list")
-		public String list(Model model) {
-			List<BoardVO> ListBoardVO = boardService.getList();
-			model.addAttribute("ListBoardVO", ListBoardVO);
-			log.info(ListBoardVO);
-			return "/board/list";
-		}
-		
 		@GetMapping("/get")
 		public String get(Model model, @RequestParam("bno") Long bno) {
 			BoardVO vo = boardService.get(bno);
@@ -58,13 +52,31 @@ public class BoardController {
 			return "/board/modify";
 		}
 		
-		/*
-		 * @PostMapping("/modify") public String modifyDo(BoardVO vo, RedirectAttributes
-		 * attr) { 
-		 * if(boardService.modify(vo)) { attr.addFlashAttribute("modified", vo);
-		 * return "redirect:/board/list"; 
-		 * }
-		 * 
-		 * return "/board/modify"; }
-		 */
+		@PostMapping("/modify") 
+		public String modify(BoardVO vo, RedirectAttributes attr) { 
+			if (boardService.modify(vo)) {
+				attr.addFlashAttribute("result", "success");
+			}
+			log.info("modify Control");
+
+			return "redirect:/board/list";
+		}
+		
+		@PostMapping("/remove")
+		public String remove(@RequestParam("bno") Long bno, RedirectAttributes attr) {
+			if (boardService.remove(bno)) {
+				attr.addFlashAttribute("result", "success");
+			}
+			return "redirect:/board/list";
+		}
+		
+		@GetMapping("/list")
+		public String list (Criteria criteria, Model model) {
+			List<BoardVO> list = boardService.getList(criteria);
+			model.addAttribute("list", list);
+			int total = boardService.getTotal(criteria);
+			model.addAttribute("pageDTO", new PageDTO(criteria, total));
+			log.info(list + "total: " + total + "  " + criteria.getListLink());
+			return "/board/list";
+		}
 }

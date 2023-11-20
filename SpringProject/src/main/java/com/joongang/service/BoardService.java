@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joongang.domain.BoardVO;
+import com.joongang.domain.Criteria;
 import com.joongang.mapper.BoardMapper;
 
 import lombok.Setter;
@@ -27,16 +28,26 @@ public class BoardService {
 			return boardMapper.getList();
 		} 
 		
+		// 비교
+		public List<BoardVO> getList(Criteria criteria) {
+			return boardMapper.getListWithPaging(criteria);
+		}
+		
+		public int getTotal(Criteria criteria) {
+			return boardMapper.getTotalCount(criteria);
+		}
+
 		public BoardVO get(Long bno) {
 			return boardMapper.read(bno);
 		}
 
-		/*
-		 * public boolean modify(BoardVO vo) { boolean chk = false; if
-		 * (boardMapper.update(vo) != null) { chk = true; }
-		 * 
-		 * return chk;
-		 * 
-		 * }
-		 */
+		public boolean modify(BoardVO vo) {
+			log.info("modify service");
+			return boardMapper.update(vo) == 1;
+		}
+
+		public boolean remove(Long bno) {
+			return boardMapper.delete(bno) == 1;
+		}
+
 }

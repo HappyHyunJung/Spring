@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+a {
+    text-decoration: none;
+}
+ul {
+    list-style-type: none;
+}
+
+.wrapper_register {
+	width: 1000px;
+	height: 580px;
+	margin: 30px auto;
+}
+
+.register_head {
+	border-bottom: 2px solid;
+	margin: 50px 0px 30px 0px;
+}
+
+.title_area {
+	display: block;
+}
+
+.title_area[name = "title"] {
+	width: 300px;
+	height: 30px;
+}
+
+.title_area[name = "writer"] {
+	width: 300px;
+	height: 30px;
+}
+
+.written_area {
+	width: 600px;
+	height: 350px;
+}
+
+.register_submit {
+	margin: 20px 0px;
+}
+
+.register_submit_button {
+	width: 100px;
+	height: 35px;
+	margin: 0px 20px;
+	font-size: 15px;
+}

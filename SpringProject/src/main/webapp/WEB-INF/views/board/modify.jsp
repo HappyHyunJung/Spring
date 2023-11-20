@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<link rel="stylesheet" href="/resources/css/modifyMain.css">
 
 <%@include file="../includes/header.jsp"%>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -25,6 +26,9 @@ $(function () {
 </script>
 
 <div class="wrapper_read">
+	<div class="read_head">
+		<h3>게시글 수정화면 입니다</h3>
+	</div>
 	<div class="read_line"></div>
 	<form action="/board/modify" method="post">  <!--  -->
 		<table class="read_table">
@@ -32,7 +36,7 @@ $(function () {
 				<tr class="read_table_title">
 					<th>번호</th>
 					<td><input class="form-control" name="bno"
-						value='<c:out value="${baord.bno }"/>' readonly="readonly"></td>
+						value='<c:out value="${board.bno }"/>' readonly="readonly"></td>
 				</tr>
 				
 				<tr class="read_table_title">
@@ -47,7 +51,7 @@ $(function () {
 				</tr>
 				<tr class="read_table_title">
 					<th>작성일</th>
-					<td><input class="form-control" name="regDate"
+					<td><input class="form-control" name="regdate  <!-- 왜 regDate로 하면 오류가 날까? -> BoardMapper.xml  -->
 						value='<fmt:formatDate pattern="yyyy-MM-dd" value="${board.regDate }"/>' readonly="readonly"> </td>
 				</tr>
 			</thead>
@@ -59,7 +63,7 @@ $(function () {
 			<button type="submit" data-oper='modify' class="read_button" >수정</button>
 			<button type="submit" data-oper='remove' class="read_button" >삭제</button>
 		</c:if>
-		<button type="submit" data-oper='list' class="read_button">List</button>
+		<button type="submit" data-oper="list" class="read_button">List</button>
 	</form>
 </div>
 

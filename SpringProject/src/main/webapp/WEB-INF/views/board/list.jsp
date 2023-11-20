@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link rel="stylesheet" href="/resources/css/boardList.css">
+
 <%@include file="../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -16,10 +17,25 @@
 			self.location = "/board/register";
 		}) ;
 		let result = '<c:out value="${result}"/>';
+		/*
 		if (result != "") {
 			result += "번 글이 등록되었습니다";
 			alert(result);
+		}*/
+		checkModal(result);
+		history.replaceState({}, null, null);
+		function checkModal(result) {
+			if (result === '' || history.state) {
+				return;
+			}
+			if (parseInt(result) > 0) {
+				result = parseInt(result) + "번이 등록되었습니다";
+			} else {
+				result = "처리가 완료 되었습니다.";
+			}
+			alert(result);
 		}
+		
 		
 		/* form 태그가 없는 상태에서 동적으로 form 을 생성한다 */
 		$(".get").on("click", function (e) {
@@ -31,6 +47,18 @@
 			form.append("<input type='hidden' name='bno' value='" + $(this).attr("href")+"'>");
 			form.appendTo('body');
 			form.submit();
+		});
+		
+		$(".paginate_button a").on("click",
+			function(e) {
+				e.preventDefault();
+				let form = $('<form></form>');
+				form.attr("method", "get");
+				form.attr("action", "/board/list");
+				form.append("<input type='hidden' name='pageNum' value='" + $(this).attr("href") + "'>");
+				form.append("<input type='hidden' name='amount' value='" + <c:out value="${pageDTO.criteria.amount}"/> + "'>");
+				form.appendTo('body');
+				form.submit();
 		});
 		
 	});
@@ -51,7 +79,7 @@
 				</thead>
 	
 				<tbody class="board_content">
-					<c:forEach var="board" items="${ListBoardVO }" >
+					<c:forEach var="board" items="${list }" >
 						<tr class="tr_list">
 							<td class="table_bno"><c:out value="${ board.bno}"></c:out></td>
 							<td class="table_title">
@@ -74,7 +102,28 @@
 					</c:forEach>
 				</tbody>
 			</table>
-	
+			<!-- page -->
+			<div class="board_page">
+				<ul class="pagination">
+					<c:if test="${pageDTO.prev} }">
+						<li class="paginate_button previout">
+							<a href="${pageDTO.startPage - 1}">Prev</a>
+						</li>
+					</c:if>
+					
+					<c:forEach var="num" begin="${pageDTO.startPage }" end="${pageDTO.endPage }">
+						<li class="paginate_button ${pageDTO.criteria.pageNum==num ? 'active_list' :'' }">
+							<a href="${num }">${num }</a>
+						</li>
+					</c:forEach>
+					<c:if test="${pageDTO.next }">
+						<li class="paginate_button next">
+							<a href="${pageDTO.endPage+1 }">Next</a>
+						</li>
+					</c:if>
+				</ul>
+			</div>
+			
 			<div class="board_button">
 				<button class="write_btn" id="write_btn">글쓰기</button>
 			</div>

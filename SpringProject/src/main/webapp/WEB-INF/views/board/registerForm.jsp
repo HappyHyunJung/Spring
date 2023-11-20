@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="/resources/css/registerFomMain.css">
+
+<%@include file="../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,5 +31,7 @@
 			</form>
 		</div>
 	</div> <!-- wrapper_register -->
+	
+	<%@include file="../includes/footer.jsp" %>
 </body>
 </html>

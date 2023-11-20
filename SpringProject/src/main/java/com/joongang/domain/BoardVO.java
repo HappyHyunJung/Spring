@@ -11,6 +11,7 @@ public class BoardVO {
 	private String title;
 	private String content;
 	private String writer;
+	
 	private Timestamp regDate;  // 트리거 설정해서 자동으로 들어감
 	private Timestamp updateDate;
 }

@@ -45,6 +45,8 @@
 			form.attr("action", "/board/get");
 			
 			form.append("<input type='hidden' name='bno' value='" + $(this).attr("href")+"'>");
+			form.append("<input type='hidden' name='pageNum' value='" + <c:out value="${pageDTO.criteria.pageNum}"/>+"'>");
+			form.append("<input type='hidden' name='amount' value='" + <c:out value="${pageDTO.criteria.amount}"/>+"'>");
 			form.appendTo('body');
 			form.submit();
 		});

@@ -19,6 +19,13 @@ $(function () {
 		} else if (operation === 'list') {
 			formObj.empty();
 			formObj.attr("action", "/board/list").attr("method", "get");
+		} else if (operation === 'list') {
+			let pageNumTag = $("input[name='pageNum']").clone();
+			let amountTag = $("input[name='amount']").clone();
+			formObj.empty();
+			formObj.attr("action", "/board/list").attr("method", "get");
+			formObj.append(pageNumTag);
+			formObj.append(amountTag);
 		}
 		formObj.submit();
 	});
@@ -31,6 +38,8 @@ $(function () {
 	</div>
 	<div class="read_line"></div>
 	<form action="/board/modify" method="post">  <!--  -->
+		<input type="hidden" name='pageNum' value='<c:out value="${criteria.pageNum }"/>'>
+		<input type="hidden" name='amount' value='<c:out value="${criteria.amount }"/>'>
 		<table class="read_table">
 			<thead>
 				<tr class="read_table_title">
@@ -60,10 +69,10 @@ $(function () {
 			<textarea class="read_content" name="content"><c:out value="${board.content }"/></textarea>
 		</div>
 		<c:if test="${auth.userid eq board.writer }">
-			<button type="submit" data-oper='modify' class="read_button" >수정</button>
-			<button type="submit" data-oper='remove' class="read_button" >삭제</button>
+			<button type="submit" data-oper='modify' class="read_button" id="modify_btn">수정</button>
+			<button type="submit" data-oper='remove' class="read_button" id="remove_btn">삭제</button>
 		</c:if>
-		<button type="submit" data-oper="list" class="read_button">List</button>
+		<button type="submit" data-oper="list" class="read_button" id="list_btn">List</button>
 	</form>
 </div>
 

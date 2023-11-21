@@ -25,8 +25,8 @@
 					<textarea type="text" class="written_area" placeholder="내용" name="content" required="required"></textarea>
 				</div>
 				<div class="register_submit">
-					<button class="register_submit_button" type="submit">작성</button>
-					<button class="register_submit_button" type="reset">취소</button>
+					<button class="register_submit_button" id="submit" type="submit">작성</button>
+					<button class="register_submit_button" id="reset" type="reset">취소</button>
 				</div>
 			</form>
 		</div>

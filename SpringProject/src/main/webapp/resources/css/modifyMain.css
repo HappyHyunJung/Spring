@@ -22,5 +22,67 @@ ul {
 }
 
 .read_table {
-	margin: 10px 0px;
+	margin: 30px 0px 10px 0px;
+	border-collapse: separate;
+	border-spacing: 0px 0px;
+}
+
+read_table_title > thead > tr{
+	border-collapse: collapse;
+	
+}
+
+.read_table_title > th {
+	width: 150px;
+	height: 30px;
+	background-color: blue;
+	color: white;
+	margin-right: 10px;
+	display: inline-block;
+	border-collapse: collapse;
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+.form-control  {
+	width: 300px;
+}
+
+.read_content {
+	width: 600px;
+	height: 350px;
+}
+
+.read_button {
+	margin: 30px 0px;
+}
+
+#modify_btn  {
+	background-color: #00ff40;
+	color: black;
+	width: 100px;
+	height: 35px;
+	font-size: 20px;
+	border: 0px;
+	margin-left: 25px;	
+}
+
+#remove_btn {
+	background-color: #ff8306;
+	color: black;
+	width: 100px;
+	height: 35px;
+	font-size: 20px;
+	border: 0px;
+	margin-left: 25px;	
+}
+
+#list_btn  {
+	background-color: black;
+	color: white;
+	width: 100px;
+	height: 35px;
+	font-size: 20px;
+	margin-left: 25px;	
+	border: 0px;
 }

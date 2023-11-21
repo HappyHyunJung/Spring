@@ -40,33 +40,37 @@ public class BoardController {
 		}
 		
 		@GetMapping("/get")
-		public String get(Model model, @RequestParam("bno") Long bno) {
+		public String get(Model model, @RequestParam("bno") Long bno, Criteria criteria) {
 			BoardVO vo = boardService.get(bno);
 			model.addAttribute("board", vo);
 			return "/board/get";
 		}
 		
 		@GetMapping("/modify")
-		public String modify(@RequestParam("bno")Long bno, Model model) {
+		public String modify(@RequestParam("bno")Long bno, Criteria criteria, Model model) {
 			model.addAttribute("board", boardService.get(bno));
 			return "/board/modify";
 		}
 		
 		@PostMapping("/modify") 
-		public String modify(BoardVO vo, RedirectAttributes attr) { 
+		public String modify(BoardVO vo, Criteria criteria, RedirectAttributes attr) { 
 			if (boardService.modify(vo)) {
 				attr.addFlashAttribute("result", "success");
 			}
 			log.info("modify Control");
-
+			
+			attr.addAttribute("pageNum", criteria.getPageNum());
+			attr.addAttribute("amount", criteria.getAmount());
 			return "redirect:/board/list";
 		}
 		
 		@PostMapping("/remove")
-		public String remove(@RequestParam("bno") Long bno, RedirectAttributes attr) {
+		public String remove(@RequestParam("bno") Long bno, Criteria criteria, RedirectAttributes attr) {
 			if (boardService.remove(bno)) {
 				attr.addFlashAttribute("result", "success");
 			}
+			attr.addAttribute("pageNum", criteria.getPageNum());
+			attr.addAttribute("amount", criteria.getAmount());
 			return "redirect:/board/list";
 		}
 		

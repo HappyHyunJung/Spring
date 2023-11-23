@@ -1,6 +1,9 @@
 package com.joongang.config;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.beans.propertyeditors.ClassArrayEditor;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -30,7 +33,16 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 		characterEncodingFilter.setForceEncoding(true);
 		return new Filter[] {characterEncodingFilter};
 	}
-	
-	
 
+	@Override
+	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
+		MultipartConfigElement multipartConfig =
+				new MultipartConfigElement("C:\\upload\\temp",
+						5*1024*1024,
+						40*1024*1024,
+						5*1024*1024
+						);
+		registration.setMultipartConfig(multipartConfig);
+	}
 }

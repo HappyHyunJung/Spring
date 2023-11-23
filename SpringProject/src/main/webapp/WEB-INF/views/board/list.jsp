@@ -108,7 +108,7 @@
 			<div class="board_page">
 				<ul class="pagination">
 					<c:if test="${pageDTO.prev} }">
-						<li class="paginate_button previout">
+						<li class="paginate_button previous">
 							<a href="${pageDTO.startPage - 1}">Prev</a>
 						</li>
 					</c:if>

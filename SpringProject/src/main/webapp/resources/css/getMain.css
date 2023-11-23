@@ -12,9 +12,9 @@ ul {
 }
 
 .wrapper_read {
-	width: 1000px;
+	width: 1300px;
 	height: 580px;
-	margin: 30px auto;
+	margin: 20px auto;
 }
 
 .read_head {
@@ -67,4 +67,40 @@ tr , td {
 	margin-top: 30px;
 	margin-left: 25px;
 	border: 0px;
+}
+
+/* 댓글 css */
+.read_reply_con {
+	margin-left: 200px;
+}
+
+.reply_tab {
+	display: flex;
+	position: relative;
+}
+h4 {
+	display: inline;
+}
+.read_reply {
+	display: inline;
+	position: absolute;right: 0px;
+}
+
+.reply > li {
+	margin-top: 10px;
+	width: 500px;
+	/*background-color: yellow;*/
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.panel-footer {
+	/*background-color: red; */
+	margin: auto;
+	display: flex;
+	width: fit-content;
+	text-align: center;
+}
+
+.paginate_button {
+	width: 100px;
 }

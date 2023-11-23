@@ -8,6 +8,49 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+		let regex = new RegExp("(.*)\.(exe|xip|alz)$");
+		let maxSize = 5*1024*1024;
+		function checkExtension(filename, fileSize) {
+			if(fileSize >= maxSize) {
+				alert("파일 사이즈 초과");
+				return false;
+			}
+			if (regex.test (filename)) {
+				alert("해당 종류의 파일은 업로드할 없습니다.");
+				return false;
+			}
+			return true;
+		}
+		
+		$("#uploadFile").on("change", function(e) {
+			let formData = new FormData();  // ajax에서 form태그처럼 비슷하게 데이터를 보내기 위해 FormData 객체를 생성한다
+			let inputFile = $("#uploadFile");
+			let files = inputFile[0].files;
+			for (let i = 0; i < files.length; i++) {
+				if (!checkExtension(files[i].name, files[i].size)) {
+					return false;
+				}
+				formData.append("uploadFile", files[i]);
+			}
+			$.ajax({
+				type : 'post',
+				url : '/uploadFileAjax',
+				processData : false,
+				contentType : false,
+				data : formData,
+				success: function(result) {
+					console.log(result);
+					showUploadResult(result);
+				}
+			});
+		});
+	});
+</script>
+
+
 </head>
 <body>
 	<div class="wrapper_register">
@@ -29,6 +72,19 @@
 					<button class="register_submit_button" id="reset" type="reset">취소</button>
 				</div>
 			</form>
+		</div>
+		
+		<!-- 첨부파일 -->
+		<div class="article-bottom">
+			<div class="field1 get-th field-style">
+				<label><b>첨부파일</b></label>
+			</div>
+			<div class="field2 get-td">
+				<input type="file" name="uploadFile" id="uploadFile" class="file-input" multiple />
+			</div>
+			<div class="uploadResult">
+				<ul></ul>
+			</div>
 		</div>
 	</div> <!-- wrapper_register -->
 	

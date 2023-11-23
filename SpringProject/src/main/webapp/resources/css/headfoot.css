@@ -14,10 +14,18 @@ ul {
 .container {
 	width : 1500px;
 	height: 200px;
-  /* 	background-color: #e6e6e6; */
   	margin: 0px auto;
 	background-color: #ff6f6f; 
 	position: relative;
+}
+
+.containerGet {
+	width : 1500px;
+	height: 200px;
+  /* 	background-color: #e6e6e6; */
+  	margin: 0px auto;
+	background-color: #ff6f6f; 
+	position: relative;	
 }
 
 .wrapper_title {
@@ -42,25 +50,29 @@ ul {
 
 .menu-item-con > a {
 	color: black;
-}
-
-.menu-item-con > a:hover {
-		color : blue;
-		font-weight: bolder;
-}
-
-.menu-item {
-	background-color: yellow;
-	font-size : 20px;
 	width: 500px;
 	height: 50px;
+	background-color: yellow;
+	font-size : 20px;
 	justify-content: center;
 	align-items: center;	
   	display: inline-flex;
-	
+}
+
+.menu-item-con > a:hover {
+	background-color: black;
+	color : white;
+	font-weight: bolder;
+}
+
+.menu-item {
 	
 }
 
+.menu-item : hover {
+	background-color: black;
+	color: white;
+}
 
 /* footer.jsp */
 .footer_write {

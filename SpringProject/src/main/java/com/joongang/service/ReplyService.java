@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.joongang.domain.Criteria;
+import com.joongang.domain.ReplyPageDTO;
 import com.joongang.domain.ReplyVO;
 import com.joongang.mapper.ReplyMapper;
 
@@ -36,5 +38,10 @@ public class ReplyService {
 	
 	public List<ReplyVO> getList(Long bno) {
 		return replyMapper.getList(bno);
+	}
+	
+	public ReplyPageDTO getListWithPaging(Criteria criteria, Long bno) {
+		return new ReplyPageDTO(replyMapper.getTotalCount(bno),
+				replyMapper.getListWithPaging(criteria, bno));
 	}
 }

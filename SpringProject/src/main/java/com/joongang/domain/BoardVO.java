@@ -1,6 +1,7 @@
 package com.joongang.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.Data;
 
@@ -14,4 +15,6 @@ public class BoardVO {
 	
 	private Timestamp regDate;  // 트리거 설정해서 자동으로 들어감
 	private Timestamp updateDate;
+	
+	private List<BoardAttachVO> attachList;
 }

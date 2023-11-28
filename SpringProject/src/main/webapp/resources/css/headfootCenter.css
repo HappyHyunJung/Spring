@@ -72,9 +72,8 @@ ul {
 
 .footer_write {
 	width: 1000px;
-	text-align: left;
+	text-align: center;
 	margin: 0px auto;
-	margin-top: 50px;
 }
 .list_item {
 	display: inline-flex;
@@ -83,5 +82,5 @@ ul {
 .wrapper_footer > p {
 	width: 1000px;
 	margin: 0px auto;
-	text-align: left;
+	text-align: center;
 }

@@ -14,7 +14,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container">  <!-- width: 1500 height : 200 -->
+	<!-- container 대신 다른 클래스 이름으로 바꿨다 , 부트스트랩과 겹치지 않는 클래스를 썼다 -->
+	<div class="containerGet ">  <!-- width: 1500 height : 200 -->
 		<div class="wrapper">
 			<div class="wrapper_head">
 				<div class="wrapper_title">

@@ -222,12 +222,73 @@ $(function () {
 		});
 	});
 	
+	//첨부파일 출력
+	//bno번호
+	let bno = '<c:out value="${board.bno}"/>';
+	$.getJSON("/board/getAttachList/" + bno, function(attachList) {
+		console.log("attachList:" + attachList);
+		let str = "";
+		//callback -> array반복시 요청됨
+		$(attachList).each(function(i, attach) {
+			console.log(i, attach.uuid, attach.filename, attach.filetype);
+			//이미지일 경우, 썸네일 화면에 노출
+			if(attach.filetype == 1) {
+				//썸네일 이미지 경로
+				let fileCallPath = encodeURIComponent(attach.uploadpath + "\\s_" + attach.uuid + "_" + attach.filename);
+				console.log("fileCallPath : " + fileCallPath);
+				str +="<li data-path='" + attach.uploadpath + "'";
+				str +=" data-uuid='" + attach.uuid + "' data-filename='" + attach.filename + "' data-type='" + attach.filetype + "'>";
+				str += " <div>";
+				str += "  <span>" + attach.filename + "</span>";
+				str += "   <img src='/display?filename=" + fileCallPath + "'/>";
+				str += " </div>";
+				str += "</li>";
+			} else {
+				//이미지가 아닌 경우
+				str +="<li data-path='" + attach.uploadpath + "'";
+				str +=" data-uuid='" + attach.uuid + "' data-filename='" + attach.filename + "' data-type='" + attach.filetype + "'>";
+				str += " <div>";
+				str += "  <span>" + attach.filename + "</span>";
+				str += "  <img src='/resources/img/attach.png'/>";
+				str += " </div>";
+				str += "</li>";
+			}
+		});
+		$(".uploadResult ul").html(str);
+	});
+    
+	function showImage(fileCallPath) {
+		console.log(fileCallPath);
+		$(".bigPictureWrapper").css("display", "flex").show();
+		$(".bigPicture").html("<img src='/display?filename=" + fileCallPath + "'/>").animate({width:'100%', top:'0'}, 600);
+	}
+	$(".uploadResult").on("click", "li", function(e) {
+		console.log("view image");
+		let liObj = $(this);
+		let path = encodeURIComponent(liObj.data("path") + "\\" + liObj.data("uuid") + "_" + liObj.data("filename"));
+		if (liObj.data("type")) {
+			showImage(path);
+		} else {
+			if (path.toLowerCase().endsWith('pdf')) {
+				//new window
+				window.open("/pdfviewer?filename=" + path);
+			} else {
+				//download
+				self.location = "/downloadFile?filename=" + path;
+			}
+		}
+	});
+	$(".bigPictureWrapper").on("click", function(e) {
+		$(".bigPictureWrapper").hide();
+		$(".bigPicture").css("top", "15%");
+	});
+	
 });  /* #modalRegisterBtn 클릭 함수 에서 ReplyService.add() 를 호출하면 오류때문에 지워야 된다 */
 /* ReplyService.add()  주석처리하면 마지막 닫는 괄호거 없으면 오류가 된다 */
 /* ReplyService.add()에서 괄호를 잘못 닫아서 오류가 났다 */
 </script>
 
-<%@include file="../includes/headerGet.jsp"%>
+<%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="/resources/css/getMain.css">
 <link rel="stylesheet" href="/resources/css/headfoot.css">
 
@@ -265,6 +326,18 @@ $(function () {
 		<div class="read_table_content">
 			<textarea class="read_content" name="content" readonly="readonly">${board.content }</textarea>
 		</div>
+		<!-- 첨부파일 -->
+		<div class="article-bottom">
+			<div class="field3 get-th field-style">
+				<p><b>첨부파일</b></p>
+			</div>
+			<div class="field3 get-td">
+				<div class="uploadResult">
+					<ul></ul>
+				</div>
+			</div>
+		</div>
+		
 		<div class="read_button" style="display: inline;">
 			<button class="read_button" id="list_btn">목록</button>
 			<c:if test="${auth.userid eq board.writer }">
@@ -326,8 +399,11 @@ $(function () {
 	        <!-- /.modal-dialog -->
 	    </div>
 	    <!-- /.modal -->
+	    
+	    <div class="bigPictureWrapper">
+	    	<div class="bigPicture"></div>
+	    </div>
 	</div>
 	
 </div>
-	
 <%@include file="../includes/footer.jsp" %>	

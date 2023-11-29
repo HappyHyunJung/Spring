@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.JsonObject;
 import com.joongang.domain.Criteria;
 import com.joongang.domain.ReplyPageDTO;
 import com.joongang.domain.ReplyVO;
@@ -61,8 +62,8 @@ public class ReplyController {
 			produces = {MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> modify (@RequestBody ReplyVO vo ,
 			@PathVariable("rno") Long rno) {
-		log.info("rno:  : " + rno);
-		log.info("modify : " + vo);
+		log.info("rno  : " + rno);
+		log.info("modify  : " + vo);
 		return replyService.modify(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -84,5 +85,16 @@ public class ReplyController {
 		log.info("list : " + dto.getList());
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 		
+	}
+	
+	@GetMapping(value = "/cnt",
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> getReplyCnt(
+			@RequestParam(value = "list[]") List<Long> list) {
+		JsonObject jobj = new JsonObject();
+		for(Long bno : list) {
+			jobj.addProperty(String.valueOf(bno), replyService.getReplyCnt(bno));
+		}
+		return new ResponseEntity<>(jobj.toString(), HttpStatus.OK);
 	}
 }

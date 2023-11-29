@@ -188,7 +188,7 @@ $(function () {
 			$(".modal").modal("show");
 		});
 	}); 
-	
+	// 댓글 수정
 	$("#modalModBtn").on("click", function(e) {
 		let reply = {reply: $("#reply").val(),
 				rno: $(".modal").data("rno")
@@ -208,7 +208,7 @@ $(function () {
 	$("#listpp").on("click", function(e) {
 		console.log("hhh");
 	});
-	
+	// 댓글 삭제
 	$(".reply").on("click", "li #remove", function(e) {
 		let rno = $(this).parent().closest('div').data("rno");
 		alert('remove ' + rno);
@@ -239,7 +239,7 @@ $(function () {
 				str +="<li data-path='" + attach.uploadpath + "'";
 				str +=" data-uuid='" + attach.uuid + "' data-filename='" + attach.filename + "' data-type='" + attach.filetype + "'>";
 				str += " <div>";
-				str += "  <span>" + attach.filename + "</span>";
+				str += "  <span>" + attach.filename + "</span><br>";
 				str += "   <img src='/display?filename=" + fileCallPath + "'/>";
 				str += " </div>";
 				str += "</li>";
@@ -248,7 +248,7 @@ $(function () {
 				str +="<li data-path='" + attach.uploadpath + "'";
 				str +=" data-uuid='" + attach.uuid + "' data-filename='" + attach.filename + "' data-type='" + attach.filetype + "'>";
 				str += " <div>";
-				str += "  <span>" + attach.filename + "</span>";
+				str += "  <span>" + attach.filename + "</span><br>";
 				str += "  <img src='/resources/img/attach.png'/>";
 				str += " </div>";
 				str += "</li>";
@@ -259,6 +259,7 @@ $(function () {
     
 	function showImage(fileCallPath) {
 		console.log(fileCallPath);
+		// 첨부파일 이미지 보여주는 부분 - 애니메이션으로 이미지가 보여진다
 		$(".bigPictureWrapper").css("display", "flex").show();
 		$(".bigPicture").html("<img src='/display?filename=" + fileCallPath + "'/>").animate({width:'100%', top:'0'}, 600);
 	}
@@ -267,7 +268,7 @@ $(function () {
 		let liObj = $(this);
 		let path = encodeURIComponent(liObj.data("path") + "\\" + liObj.data("uuid") + "_" + liObj.data("filename"));
 		if (liObj.data("type")) {
-			showImage(path);
+			showImage(path);  // 이미지가 보여지는 함수
 		} else {
 			if (path.toLowerCase().endsWith('pdf')) {
 				//new window

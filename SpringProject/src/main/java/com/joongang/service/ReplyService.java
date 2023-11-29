@@ -44,4 +44,8 @@ public class ReplyService {
 		return new ReplyPageDTO(replyMapper.getTotalCount(bno),
 				replyMapper.getListWithPaging(criteria, bno));
 	}
+	
+	public int getReplyCnt(Long bno) {
+		return replyMapper.getTotalCount(bno);
+	}
 }

@@ -75,7 +75,9 @@ public class BoardService {
 			return modifyResult;
 		}
 
+		@Transactional
 		public boolean remove(Long bno) {
+			attachMapper.deleteAll(bno);
 			return boardMapper.delete(bno) == 1;
 		}
 

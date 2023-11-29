@@ -37,7 +37,7 @@
 		}
 		
 		
-		/* form 태그가 없는 상태에서 동적으로 form 을 생성한다 */
+		// form 태그가 없는 상태에서 동적으로 form 을 생성한다 
 		$(".get").on("click", function (e) {
 			e.preventDefault();
 			let form = $("<form></form>");
@@ -63,6 +63,24 @@
 				form.submit();
 		});
 		
+		let list = new Array();
+		<c:forEach items="${list}" var="board">
+			list.push(<c:out value="${board.bno}"/>);
+		</c:forEach>
+		console.log(list);
+		$.getJSON("/replies/cnt", {list : list}, function(data) {
+			console.log(data);
+			// getJSON() 에서 data의 키만 불러오는 함수
+			let keys = Object.keys(data);
+			$(keys).each(function (i, bno) {
+				console.log(i + " : " + bno);
+				let replyCnt = data[bno];
+				// a 태그의 name 오브젝트를 만들고 data[bno]에 상응하는 데이터인 replyCnt를 저장
+				let text = $("a[name="+bno+"]").text().trim() + "  [" + replyCnt + "]";
+				$("a[name="+bno+"]").text(text);
+			});
+		});
+		
 	});
 </script>
 
@@ -85,7 +103,7 @@
 						<tr class="tr_list">
 							<td class="table_bno"><c:out value="${ board.bno}"></c:out></td>
 							<td class="table_title">
-								<a class="get" href='<c:out value="${board.bno }"/>'>
+								<a class="get" href='<c:out value="${board.bno }"/>' name='<c:out value="${board.bno }"/>'>
 									<c:out value="${ board.title}"></c:out>
 								</a>
 							</td>

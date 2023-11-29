@@ -62,7 +62,8 @@
 					str +="  <div>";
 					str +="   <span> " + obj.filename + "</span>";
 					str +="   <button type='button' data-file=\'" + fileCallPath + "\'"
-					str +="     data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>X</button><br>";
+					str +="     data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
+					str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px;'></button><br>"
 					//이미지일 경우 rest방식(동적) 파일 썸네일을 보여줌
 					str +="   <img src='/display?filename=" + fileCallPath + "'/>";
 					str +="  </div>";
@@ -74,7 +75,8 @@
 					str +="  <div>";
 					str +="   <span> " + obj.filename + "</span>";
 					str +="   <button type='button' data-file=\'" + fileCallPath + "\'"
-					str +="     data-type='file' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>X</button><br>";
+					str +="     data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
+					str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px;'></button><br>"
 					str +="   <img src='/resources/img/attach.png'/>";
 					str +="  </div>";
 					str +="</li>";
@@ -143,8 +145,8 @@
 					<textarea type="text" class="written_area" placeholder="내용" name="content" required="required"></textarea>
 				</div>
 				<div class="register_submit">
-					<button class="register_submit_button" type="submit">작성</button>
-					<button class="register_submit_button" type="reset">취소</button>
+					<button class="register_submit_button submit" type="submit">작성</button>
+					<button class="register_submit_button reset" type="reset">취소</button>
 				</div>
 			</form>
 		</div>

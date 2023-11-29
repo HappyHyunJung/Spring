@@ -1,5 +1,9 @@
 package com.joongang.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,13 +85,36 @@ public class BoardController {
 		}
 		
 		@PostMapping("/remove")
-		public String remove(@RequestParam("bno") Long bno, Criteria criteria, RedirectAttributes attr) {
+		public String remove(@RequestParam("bno") Long bno, Criteria criteria, RedirectAttributes attr) throws IOException {
+			List<BoardAttachVO> attachList = boardService.getAttachList(bno);
 			if (boardService.remove(bno)) {
+				deleteFiles(attachList);
 				attr.addFlashAttribute("result", "success");
 			}
-			attr.addAttribute("pageNum", criteria.getPageNum());
-			attr.addAttribute("amount", criteria.getAmount());
-			return "redirect:/board/list";
+//			attr.addAttribute("pageNum", criteria.getPageNum());
+//			attr.addAttribute("amount", criteria.getAmount());
+//			return "redirect:/board/list";
+			return "redirect:/board/list" + criteria.getListLink();
+		}
+		
+		private void deleteFiles(List<BoardAttachVO> attachList) throws IOException {
+			if(attachList == null || attachList.size() == 0) {
+				return;
+			}
+			for(BoardAttachVO attachVO : attachList) {
+				try {
+					Path file = Paths.get("c:\\upload\\" + attachVO.getUploadpath()+
+							"\\" + attachVO.getUuid()+"_"+attachVO.getFilename());
+					Files.deleteIfExists(file);
+					if(Files.probeContentType(file).startsWith("image")) {
+						Path thumbNail = Paths.get("c:\\upload\\"+attachVO.getUploadpath()+
+								"\\s_" + attachVO.getUuid() + "_" + attachVO.getFilename());
+						Files.delete(thumbNail);
+					}
+				} catch(Exception e) {
+					log.error("delete file error : " + e.getMessage());
+				}
+			}
 		}
 		
 		@GetMapping(value = "/getAttachList/{bno}",
@@ -98,6 +125,8 @@ public class BoardController {
 			log.info("getAttachList" + bno);
 			return new ResponseEntity<>(boardService.getAttachList(bno), HttpStatus.OK);
 		}
+		
+		
 		
 		
 }

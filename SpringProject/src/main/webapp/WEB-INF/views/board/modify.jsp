@@ -92,7 +92,8 @@ $(function () {
 				str += " <div>";
 				str += "  <span>" + attach.filename + "</span>";
 				str += "  <button type='button' data-file=\'"+fileCallPath+"\' data-type='image' ";
-				str += "    class='btn btn-warning btn-circle'><i class='fa fa-times'></i>X</button><br>";
+				str += "    class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
+				str += "        <img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px;'></button><br>"
 				str += "   <img src='/display?filename=" + fileCallPath + "'/>";
 				str += " </div>";
 				str += "</li>";
@@ -104,7 +105,8 @@ $(function () {
 				str += " <div>";
 				str += "  <span>" + attach.filename + "</span>";
 				str += "  <button type='button' data-file=\'"+fileCallPath+"\' data-type='file' ";
-				str += "    class='btn btn-warning btn-circle'><i class='fa fa-times'></i>X</button><br>";
+				str += "    class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
+				str += "		<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px;'></button><br>";
 				str += "  <img src='/resources/img/attach.png'/>";
 				str += " </div>";
 				str += "</li>";
@@ -135,7 +137,8 @@ $(function () {
 				str +="  <div>";
 				str +="   <span> " + obj.filename + "</span>";
 				str +="   <button type='button' data-file=\'" + fileCallPath + "\'"
-				str +="     data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>X</button><br>";
+				str +="     data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
+				str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px;'></button><br>";
 				//이미지일 경우 rest방식(동적) 파일 썸네일을 보여줌
 				str +="   <img src='/display?filename=" + fileCallPath + "'/>";
 				str +="  </div>";
@@ -147,7 +150,8 @@ $(function () {
 				str +="  <div>";
 				str +="   <span> " + obj.filename + "</span>";
 				str +="   <button type='button' data-file=\'" + fileCallPath + "\'"
-				str +="     data-type='file' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>X</button><br>";
+				str +="     data-type='file' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
+				str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px;'></button><br>";
 				str +="   <img src='/resources/img/attach.png'/>";
 				str +="  </div>";
 				str +="</li>";
@@ -196,14 +200,14 @@ $(function () {
 			<textarea class="read_content" name="content"><c:out value="${board.content }"/></textarea>
 		</div>
 		<div class="field1 get-th field-style">
-				<label><b>첨부파일</b></label>
-			</div>
-			<div class="field2 get-td field-style uploadDiv">
-				<input type="file" name="uploadFile" id="uploadFile" class="file-input" multiple="multiple"	/>		
-			</div>
-			<div class="uploadResult">
-				<ul></ul>
-			</div>
+			<label><b>첨부파일</b></label>
+		</div>
+		<div class="field2 get-td field-style uploadDiv">
+			<input type="file" name="uploadFile" id="uploadFile" class="file-input" multiple="multiple"	/>		
+		</div>
+		<div class="uploadResult">
+			<ul></ul>
+		</div>
 		<c:if test="${auth.userid eq board.writer }">
 			<button type="submit" data-oper='modify' class="read_button" id="modify_btn">수정</button>
 			<button type="submit" data-oper='remove' class="read_button" id="remove_btn">삭제</button>

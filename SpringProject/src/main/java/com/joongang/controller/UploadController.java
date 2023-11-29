@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
 import com.joongang.domain.AttachFileDTO;
 
 import lombok.extern.log4j.Log4j2;
@@ -104,6 +105,7 @@ public class UploadController {
 		}
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
+	
 	@GetMapping(value = "/display", produces = MediaType.IMAGE_JPEG_VALUE)
 	public ResponseEntity<byte[]> getFile(@RequestParam("filename") String filename) {
 		log.info("filename: " + filename);
@@ -200,4 +202,6 @@ public class UploadController {
 		}
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
+	
+	
 }

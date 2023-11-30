@@ -60,26 +60,26 @@
 				console.log(result);
 				if (obj.image) {
 					let fileCallPath = encodeURIComponent(obj.uploadpath + "\\s_" + obj.uuid + "_" + obj.filename);
-					str +="<li style='width:150px; height:150px; position:relative;' data-path='" + obj.uploadpath + "' ";
+					str +="<li style='width:150px; height:150px; position:relative;' data-path='" + obj.uploadpath + "'";
 					str +=" data-uuid='" + obj.uuid + "' data-filename='" + obj.filename + "' data-type='" + obj.image + "'>";
 					str +="  <div>";
 					str +="   <span> " + obj.filename + "</span>";
-					str +="   <button type='button' data-file=\'" + fileCallPath + "\'"
+					str +="   <button type='button' data-file=\'" + fileCallPath + "\'";
 					str +="     data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
-					str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px; position:absolute; top:0px; right:0px;'></button><br>"
+					str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px; position:absolute; top:0px; right:0px;'></button><br>";
 					//이미지일 경우 rest방식(동적) 파일 썸네일을 보여줌
 					str +="   <img src='/display?filename=" + fileCallPath + "' style='width: 80px; height:70px;'/>";
 					str +="  </div>";
 					str +="</li>";
 				} else {
 					let fileCallPath = encodeURIComponent(obj.uploadpath + "\\" + obj.uuid + "_" + obj.filename);
-					str +="<li style='width:150px; height:150px; position:relative;' data-path='" + obj.uploadpath + " ' ";
+					str +="<li style='width:150px; height:150px; position:relative;' data-path='" + obj.uploadpath + "'";
 					str +=" data-uuid='" + obj.uuid + "' data-filename='" + obj.filename + "' data-type='" + obj.image + "'>";
 					str +="  <div>";
 					str +="   <span> " + obj.filename + "</span>";
-					str +="   <button type='button' data-file=\'" + fileCallPath + "\'"
+					str +="   <button type='button' data-file=\'" + fileCallPath + "\'";
 					str +="     data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
-					str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px; position:absolute; top:0px; right:0px;'></button><br>"
+					str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px; position:absolute; top:0px; right:0px;'></button><br>";
 					str +="   <img src='/resources/img/attach.png' style='width: 80px; height:70px;'/>";
 					str +="  </div>";
 					str +="</li>";

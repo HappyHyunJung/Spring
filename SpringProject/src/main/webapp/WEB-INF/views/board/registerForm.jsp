@@ -48,36 +48,39 @@
 				}
 			});
 		});
+		// 글 작성 단계 - 첨부파일 이미지와 이미지파일 썸네일 보이게 하는 기능
 		function showUploadResult(result) {
 			if(!result || result.length == 0) { return; }
 			let uploadUL = $(".uploadResult ul");
+			uploadUL.css("width", "300px").css("height", "150px");
+			uploadUL.css("display", "flex").css("flex-wrap", "wrap");
 			let str = "";
 			//제이쿼리형으로 데이터를 변환하고 each로 인해 값을 하나하나 가져오게 됨
 			$(result).each( function (i, obj) {
 				console.log(result);
 				if (obj.image) {
 					let fileCallPath = encodeURIComponent(obj.uploadpath + "\\s_" + obj.uuid + "_" + obj.filename);
-					str +="<li data-path='" + obj.uploadpath + "'";
+					str +="<li style='width:150px; height:150px; position:relative;' data-path='" + obj.uploadpath + "' ";
 					str +=" data-uuid='" + obj.uuid + "' data-filename='" + obj.filename + "' data-type='" + obj.image + "'>";
 					str +="  <div>";
 					str +="   <span> " + obj.filename + "</span>";
 					str +="   <button type='button' data-file=\'" + fileCallPath + "\'"
 					str +="     data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
-					str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px;'></button><br>"
+					str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px; position:absolute; top:0px; right:0px;'></button><br>"
 					//이미지일 경우 rest방식(동적) 파일 썸네일을 보여줌
-					str +="   <img src='/display?filename=" + fileCallPath + "'/>";
+					str +="   <img src='/display?filename=" + fileCallPath + "' style='width: 80px; height:70px;'/>";
 					str +="  </div>";
 					str +="</li>";
 				} else {
 					let fileCallPath = encodeURIComponent(obj.uploadpath + "\\" + obj.uuid + "_" + obj.filename);
-					str +="<li data-path='" + obj.uploadpath + "'";
+					str +="<li style='width:150px; height:150px; position:relative;' data-path='" + obj.uploadpath + " ' ";
 					str +=" data-uuid='" + obj.uuid + "' data-filename='" + obj.filename + "' data-type='" + obj.image + "'>";
 					str +="  <div>";
 					str +="   <span> " + obj.filename + "</span>";
 					str +="   <button type='button' data-file=\'" + fileCallPath + "\'"
 					str +="     data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
-					str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px;'></button><br>"
-					str +="   <img src='/resources/img/attach.png'/>";
+					str +="			<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px; position:absolute; top:0px; right:0px;'></button><br>"
+					str +="   <img src='/resources/img/attach.png' style='width: 80px; height:70px;'/>";
 					str +="  </div>";
 					str +="</li>";
 				}

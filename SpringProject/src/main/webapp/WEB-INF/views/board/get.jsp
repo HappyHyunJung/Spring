@@ -252,6 +252,7 @@ $(function () {
 				str += "  <img src='/resources/img/attach.png'/>";
 				str += " </div>";
 				str += "</li>";
+				
 			}
 		});
 		$(".uploadResult ul").html(str);
@@ -267,6 +268,7 @@ $(function () {
 		console.log("view image");
 		let liObj = $(this);
 		let path = encodeURIComponent(liObj.data("path") + "\\" + liObj.data("uuid") + "_" + liObj.data("filename"));
+		console.log("path : " + path);
 		if (liObj.data("type")) {
 			showImage(path);  // 이미지가 보여지는 함수
 		} else {

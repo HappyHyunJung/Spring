@@ -1,16 +1,5 @@
 @charset "UTF-8";
 
-* {
-    margin: 0px;
-    padding: 0px;
-}
-a {
-    text-decoration: none;
-}
-ul {
-    list-style-type: none;
-}
-
 .wrapper_register {
 	width: 1000px;
 	height: 580px;

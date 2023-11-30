@@ -63,13 +63,14 @@
 				form.submit();
 		});
 		
+		// 댓글 개수 넣기
 		let list = new Array();
 		<c:forEach items="${list}" var="board">
 			list.push(<c:out value="${board.bno}"/>);
 		</c:forEach>
 		console.log(list);
 		$.getJSON("/replies/cnt", {list : list}, function(data) {
-			console.log(data);
+			//console.log(data);
 			// getJSON() 에서 data의 키만 불러오는 함수
 			let keys = Object.keys(data);
 			$(keys).each(function (i, bno) {
@@ -80,7 +81,37 @@
 				$("a[name="+bno+"]").text(text);
 			});
 		});
-		
+		// 게시판에 첨부파일 이미지 넣기
+		let listAttach = new Array();
+		<c:forEach items="${list}" var="board">
+			listAttach.push(<c:out value="${board.bno}"/>);
+		</c:forEach>
+		if(list.length === 0) {
+			return;
+		}
+		// {list : list}에서 list를 다른 변수명 (listAttach)로 바꿔면 오류뜬다
+		$.getJSON("/board/getAttachListOnList", {list : list}, function (data) {
+			console.log(data);
+			let html = "";
+			// 키 정렬
+			let keys = Object.keys(data).sort((a, b) => Number(b) - Number(a));
+			$(keys).each(function(i, bno) {
+				let attach = data[bno];
+				//console.log(bno);
+				if (attach.length == 0) {
+					return;
+				}
+				if (attach[0] != null) {
+					if (attach[0].filetype) {
+						let fileCallPath = encodeURIComponent(attach[0].uploadpath + "\\s_" + attach[0].uuid + "_" + attach[0].filename);
+						html = "<img src='/display?filename="+fileCallPath+"' style='width:80px; height: 70px;'>";
+					} else {
+						html = "<img src='/resources/img/attach.png' style='width:80px; height:70px;'>";
+					}
+					$("#"+bno).html(html);
+				}
+			});
+		});
 	});
 </script>
 
@@ -94,6 +125,7 @@
 						<th class="table_bno">번호</th>
 						<th class="table_title">제목</th>
 						<th class="table_writer">작성자</th>
+						<th class="table_attach">첨부파일</th>
 						<th class="table_date">작성일</th>
 					</tr>
 				</thead>
@@ -108,6 +140,7 @@
 								</a>
 							</td>
 							<td class="table_writer"><c:out value="${ board.writer}"></c:out></td>
+							<td id='<c:out value="${board.bno}"/>'></td>
 							<td class="table_date">
 								<c:choose>
 									<c:when test="${board.regDate } == ${board.updateDate}">

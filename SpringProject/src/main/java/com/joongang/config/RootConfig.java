@@ -9,13 +9,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 //import com.joongang.service.MemberRegisterService;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@ComponentScan(basePackages = {"com.joongang.service"})
+@ComponentScan(basePackages = {"com.joongang.service", "com.joongang.task"})
+@EnableScheduling
 @MapperScan(basePackages = {"com.joongang.mapper"})
 public class RootConfig {
 	

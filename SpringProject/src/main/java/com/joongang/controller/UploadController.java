@@ -34,6 +34,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
 import com.joongang.domain.AttachFileDTO;
+import com.joongang.domain.BoardAttachVO;
+import com.joongang.service.BoardService;
 
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -105,7 +107,7 @@ public class UploadController {
 		}
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
-	
+	// 첨부파일 보여주기
 	@GetMapping(value = "/display", produces = MediaType.IMAGE_JPEG_VALUE)
 	public ResponseEntity<byte[]> getFile(@RequestParam("filename") String filename) {
 		log.info("filename: " + filename);
@@ -121,7 +123,7 @@ public class UploadController {
 		}
 		return result;
 	}
-	
+	// 첨부파일 삭제
 	@DeleteMapping(value = "/deleteFile", consumes = "application/json")
 	public ResponseEntity<String> deleteFile(@RequestBody Map<String, String> param) {
 		String fileName = param.get("fileName");
@@ -147,9 +149,10 @@ public class UploadController {
 		}
 		return new ResponseEntity<String>("deleted", HttpStatus.OK);
 	}
-	
+	// PDF 파일 보여주기
 	@GetMapping("/pdfviewer")
 	public ResponseEntity<Resource> pdfFileDownload(@RequestParam("filename") String filename) {
+		log.info("filename: " + filename);
 		try {
 			String encodedFileName = URLEncoder.encode(filename,
 					StandardCharsets.UTF_8.toString()).replaceAll("\\+", "%20");
@@ -169,11 +172,12 @@ public class UploadController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
+	// 일반문서파일 다운로드
 	@GetMapping(value = "/downloadFile", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent,
 			@RequestParam("filename") String filename) {
 		Resource resource = new FileSystemResource("c:\\upload\\" + filename);
+		log.info("resource : " + resource);
 		if (resource.exists() == false) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -188,7 +192,7 @@ public class UploadController {
 			boolean checkIE = (userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1);
 			String downloadName = null;
 			if (checkIE) {
-				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-s8").replaceAll("\\", " ");
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF8").replaceAll("\\", " ");
 			} else {
 				if (userAgent.contains("Edge")) {
 					downloadName = resourceOriginalName;

@@ -36,17 +36,22 @@
 			alert(result);
 		}
 		
-		
+		// 검색어 추가
 		// form 태그가 없는 상태에서 동적으로 form 을 생성한다 
 		$(".get").on("click", function (e) {
 			e.preventDefault();
 			let form = $("<form></form>");
+			let type = $("select[name=type]").val();
+			let keyword = $("input[name=keyword]").val();
 			form.attr("method", "get");
 			form.attr("action", "/board/get");
 			
 			form.append("<input type='hidden' name='bno' value='" + $(this).attr("href")+"'>");
 			form.append("<input type='hidden' name='pageNum' value='" + <c:out value="${pageDTO.criteria.pageNum}"/>+"'>");
 			form.append("<input type='hidden' name='amount' value='" + <c:out value="${pageDTO.criteria.amount}"/>+"'>");
+			form.append("<input type='hidden' name='type' value='" + type +"'>");
+			form.append("<input type='hidden' name='keyword' value='" + keyword + "'>");
+			
 			form.appendTo('body');
 			form.submit();
 		});
@@ -69,6 +74,9 @@
 			list.push(<c:out value="${board.bno}"/>);
 		</c:forEach>
 		console.log(list);
+		if(list.length == 0) {
+			return;
+		}
 		$.getJSON("/replies/cnt", {list : list}, function(data) {
 			//console.log(data);
 			// getJSON() 에서 data의 키만 불러오는 함수
@@ -111,6 +119,21 @@
 					$("#"+bno).html(html);
 				}
 			});
+		});
+		
+		let searchForm = $("#searchForm");
+		$("#searchForm button").on("click", function(e) {
+			if (!searchForm.find("option:selected").val()) {
+				alert("검색 종료를 선택하세요");
+				return false;
+			}
+			if (!searchForm.find("input[name='keyword']").val()) {
+				alert("키워드를 입력하세요");
+				return false;
+			}
+			searchForm.find("input[name='pageNum']").val("1");
+			e.preventDefault();
+			searchForm.submit();
 		});
 	});
 </script>
@@ -175,6 +198,25 @@
 						</li>
 					</c:if>
 				</ul>
+			</div>
+			
+			<!-- 게시판 검색어 -->
+			<div class="searchform">
+				<form action="/board/list" id="searchForm">
+					<select name="type" class="select-style">
+						<option value="" <c:out value="${pageDTO.criteria.type == null ? 'selected' : ''}"/>>--</option>
+						<option value="T" <c:out value="${pageDTO.criteria.type eq 'T' ? 'selected' : ''}"/>>제목</option>
+						<option value="C" <c:out value="${pageDTO.criteria.type eq 'C' ? 'selected' : ''}"/>>내용</option>
+						<option value="W" <c:out value="${pageDTO.criteria.type eq 'W' ? 'selected' : ''}"/>>작성자</option>
+						<option value="TC" <c:out value="${pageDTO.criteria.type eq 'TC' ? 'selected' : ''}"/>>제목 or 내용</option>
+						<option value="TW" <c:out value="${pageDTO.criteria.type eq 'TW' ? 'selected' : ''}"/>>제목 or 작성자</option>
+						<option value="TWC" <c:out value="${pageDTO.criteria.type eq 'TWC' ? 'selected' : ''}"/>>제목 or 내용 or 작성자</option>
+					</select>
+					<input type="text" class="select-style" name="keyword" value="<c:out value="${pageDTO.criteria.keyword }"/>"/>
+					<input type="hidden" name="pageNum" value="<c:out value="${pageDTO.criteria.pageNum }"/>"/>
+					<input type="hidden" name="amount" value="<c:out value="${pageDTO.criteria.amount }"/>"/>
+					<button class="button">검색</button>
+				</form>
 			</div>
 			
 			<div class="board_button">

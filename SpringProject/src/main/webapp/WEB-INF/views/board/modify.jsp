@@ -35,10 +35,14 @@ $(function () {
 		} else if (operation === 'list') {
 			let pageNumTag = $("input[name='pageNum']").clone();
 			let amountTag = $("input[name='amount']").clone();
+			let typeTag = $("input[name='type']").clone();       // 검색어
+			let keywordTag = $("input[name='keyword']").clone(); // 검색어
 			formObj.empty();
 			formObj.attr("action", "/board/list").attr("method", "get");
 			formObj.append(pageNumTag);
 			formObj.append(amountTag);
+			formObj.append(typeTag);
+			formObj.append(keywordTag);
 		} else if (operation === 'modify') {
 			let str = "";
 			$(".uploadResult ul li").each(function(i, listItem) {
@@ -171,6 +175,8 @@ $(function () {
 	<form action="/board/modify" method="post">  <!--  -->
 		<input type="hidden" name='pageNum' value='<c:out value="${criteria.pageNum }"/>'>
 		<input type="hidden" name='amount' value='<c:out value="${criteria.amount }"/>'>
+		<input type="hidden" name='type' value='<c:out value="${criteria.type }"/>'>
+		<input type="hidden" name='keyword' value='<c:out value="${criteria.keyword }"/>'>
 		<table class="read_table">
 			<thead>
 				<tr class="read_table_title">

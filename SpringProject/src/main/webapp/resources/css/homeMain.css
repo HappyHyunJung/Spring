@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+* {
+	margin : 0px;
+	padding: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+ul {
+    list-style-type: none;
+}
+
+.wrapped_home {
+	margin: 20px auto;
+	width: 1300px;
+	height: 1000px;
+	position: relative;
+}
+
+.search {
+	width: 700px;
+	height: 45px;
+	border: 2px solid blue;
+	margin: auto;
+	text-align: center;
+	justify-content: center;
+}
+
+.searchIcon {
+	width: 35px;
+	height: 30px;
+	position: absolute; top: 5px;
+}
+
+.mainNav {
+	display: flex;
+	position: relative;
+	width: 1300px;	
+	height: 40px;
+	text-align: center;
+	
+	border-bottom: 2px solid blue;
+}
+
+.sector {
+	color: white;
+	background-color: blue;
+	font-size: 15px;
+	text-align: center;
+	padding: 10px;
+	font-weight: bolder;
+}
+
+.leftNav {
+	text-align: center;
+	padding: 10px;
+	font-size: 15px;
+	font-weight: bolder;
+}
+
+.rightNav {
+	position: absolute; right: 0px;
+	display: flex;	
+}
+
+.rightElement {
+	padding: 10px;
+	font-size: 15px;
+	text-align: center;
+}
+
+.rightElement a {
+	color: black;
+	
+}
+
+#slides_con {
+	overflow: hidden;
+	width: 1300px;
+	height: 500px;	
+}
+
+
+#slider > img {
+	width: 1300px;
+	height: 500px;
+}
+
+#slide4 {
+	border: 1px;
+}
+.mainImg {
+	width: 1300px;
+	display: flex;
+}

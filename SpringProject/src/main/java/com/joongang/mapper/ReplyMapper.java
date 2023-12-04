@@ -13,6 +13,7 @@ public interface ReplyMapper {
 	public int delete(Long rno);
 	public int update(ReplyVO reply);
 	public List<ReplyVO> getList(Long bno);
+	
 	public List<ReplyVO> getListWithPaging(@Param("criteria") Criteria criteria,
 			@Param("bno") Long bno);
 	public int getTotalCount(Long bno);

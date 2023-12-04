@@ -17,6 +17,7 @@ ul {
   	margin: 0px auto;
 	background-color: #ff6f6f; 
 	position: relative;
+	display: flex;
 }
 
 .containerGet {
@@ -42,7 +43,9 @@ ul {
 	display: flex;
 	font-weight: bolder;
 }
-
+.wrapper_title span a {
+	color: black;
+}
 .menu-item-con {
 	display: flex;
 	position: absolute; right: 0px; bottom: 0px;

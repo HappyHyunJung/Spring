@@ -19,7 +19,7 @@
 		<div class="wrapper">
 			<div class="wrapper_head">
 				<div class="wrapper_title">
-					<span>Spring project</span>
+					<span><a href="/">Spring project</a></span>
 				</div>
 				<div class="wrapper_sub">
 					<c:if test="${!empty auth }">

@@ -25,8 +25,8 @@ public class FileCheckTask {
 	@Setter (onMethod_ = @Autowired)
 	private BoardAttachMapper attachMapper;
 	
-	//@Scheduled(cron = "20 13 14 ? * *")  // (cron = "0 0 0 ? * SUN")  일요일마다 upload  폴더 파일 삭제하는 코드
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(cron = "20 13 14 ? * SUN")  // (cron = "0 0 0 ? * SUN")  일요일마다 upload  폴더 파일 삭제하는 코드
+	//@Scheduled(fixedRate = 5000)
 	public void checkFiles() throws Exception {
 		log.info("checkFiles");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

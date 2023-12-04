@@ -25,7 +25,7 @@ public class ReplyMapperTests {
 	
 //	@Test
 	public void testReplyInsert() {
-		long bno = 26l;
+		long bno = 28l;
 		for(int i = 0; i < 10; i++) {
 			ReplyVO replyVO = new ReplyVO();
 			replyVO.setBno(bno);
@@ -51,12 +51,12 @@ public class ReplyMapperTests {
 		log.info("UPDATE COUNT : " + count);
 	}
 	
-//	@Test
+	//@Test
 	public void testGetList() {
-		long targetBno = 26l;
+		long targetBno = 28l;
 		List<ReplyVO> replies = replyMapper.getList(targetBno);
 		for (ReplyVO vo : replies) {
-			log.info(vo);
+			log.info("##" + vo);
 		}
 	}
 	

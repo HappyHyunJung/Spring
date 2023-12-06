@@ -98,7 +98,7 @@ $(function () {
 				str += "  <button type='button' data-file=\'"+fileCallPath+"\' data-type='image' ";
 				str += "    class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
 				str += "        <img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px;'></button><br>"
-				str += "   <img src='/display?filename=" + fileCallPath + "'/>";
+				str += "   <img class='modifyAttach' src='/display?filename=" + fileCallPath + "'/>";
 				str += " </div>";
 				str += "</li>";
 			} else {
@@ -111,12 +111,19 @@ $(function () {
 				str += "  <button type='button' data-file=\'"+fileCallPath+"\' data-type='file' ";
 				str += "    class='btn btn-warning btn-circle'><i class='fa fa-times'></i>";
 				str += "		<img id='remove' src='/resources/img/removeBtn.png' style='width: 20px; height:20px;'></button><br>";
-				str += "  <img src='/resources/img/attach.png'/>";
+				str += "  <img class='modifyAttach' src='/resources/img/attach.png'/>";
 				str += " </div>";
 				str += "</li>";
 			}
 		});
 		$(".uploadResult ul").html(str);
+		$(".uploadResult ul").css("display", "flex").css("flex-wrap", "wrap");
+		$(".uploadResult ul").css("height", "150px");
+		$(".uploadResult ul li").css("margin-right", "20px").css("position", "relative");
+		$(".uploadResult ul li .modifyAttach").css("width", "80px").css("height", "70px");
+		$(".uploadResult ul li #remove").css("position", "absolute").css("top", "0px").css("right", "0px");
+		
+		
 		
 		$(".uploadResult").on("click", "button", function(e) {
 			console.log("delete file");
@@ -197,7 +204,8 @@ $(function () {
 				</tr>
 				<tr class="read_table_title">
 					<th>작성일</th>
-					<td><input class="form-control" name="regdate  <!-- 왜 regDate로 하면 오류가 날까? -> BoardMapper.xml  -->
+					<!-- 왜 regDate로 하면 오류가 날까? -> BoardMapper.xml  -->
+					<td><input class="form-control" name="regdate  
 						value='<fmt:formatDate pattern="yyyy-MM-dd" value="${board.regDate }"/>' readonly="readonly"> </td>
 				</tr>
 			</thead>
@@ -219,7 +227,6 @@ $(function () {
 			<button type="submit" data-oper='remove' class="read_button" id="remove_btn">삭제</button>
 		</c:if>
 		<button type="submit" data-oper="list" class="read_button" id="list_btn">List</button>
+<%@include file="../includes/footer.jsp" %>	
 	</form>
 </div>
-
-<%@include file="../includes/footer.jsp" %>	

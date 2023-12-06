@@ -20,6 +20,7 @@ $(function () {
 	$("#list_btn").on("click", function (e) {
 		operForm.find("#bno").remove();
 		operForm.attr("action", "/board/list");
+		operForm.css("display", "flex");
 		operForm.submit();
 	});
 	
@@ -256,10 +257,16 @@ $(function () {
 			}
 		});
 		$(".uploadResult ul").html(str);
+		$(".uploadResult ul").css("display", "flex").css("flex-wrap", "wrap");
+		$(".uploadResult ul").css("height", "150px");
+		$(".uploadResult ul li").css("margin-right", "20px");
+		
+		$(".uploadResult ul li img").css("width", "80px").css("height", "70px");
 	});
     
 	function showImage(fileCallPath) {
 		console.log(fileCallPath);
+		$(".reply_list").hide();
 		// 첨부파일 이미지 보여주는 부분 - 애니메이션으로 이미지가 보여진다
 		$(".bigPictureWrapper").css("display", "flex").show();
 		$(".bigPicture").html("<img src='/display?filename=" + fileCallPath + "'/>").animate({width:'100%', top:'0'}, 600);
@@ -283,6 +290,7 @@ $(function () {
 	});
 	$(".bigPictureWrapper").on("click", function(e) {
 		$(".bigPictureWrapper").hide();
+		$(".reply_list").show();
 		$(".bigPicture").css("top", "15%");
 	});
 	
@@ -341,7 +349,7 @@ $(function () {
 			</div>
 		</div>
 		
-		<div class="read_button" style="display: inline;">
+		<div class="read_button" style="display: flex;">
 			<button class="read_button" id="list_btn">목록</button>
 			<c:if test="${auth.userid eq board.writer }">
 				<button class="read_button" id='modify_btn'>수정</button>
@@ -404,11 +412,12 @@ $(function () {
 	        <!-- /.modal-dialog -->
 	    </div>
 	    <!-- /.modal -->
-	    
 	    <div class="bigPictureWrapper">
 	    	<div class="bigPicture"></div>
 	    </div>
+	    <%@include file="../includes/footer.jsp" %>	
 	</div>
-	
 </div>
-<%@include file="../includes/footer.jsp" %>	
+
+
+

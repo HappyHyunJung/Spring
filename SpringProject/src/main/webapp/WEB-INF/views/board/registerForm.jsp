@@ -26,6 +26,7 @@
 			}
 			return true;
 		}
+		// 첨부파일 추가될 때 동작
 		$("#uploadFile").on("change", function(e) {
 			let formData = new FormData();
 			let inputFile = $("#uploadFile");
@@ -52,8 +53,9 @@
 		function showUploadResult(result) {
 			if(!result || result.length == 0) { return; }
 			let uploadUL = $(".uploadResult ul");
-			uploadUL.css("width", "300px").css("height", "150px");
-			uploadUL.css("display", "flex").css("flex-wrap", "wrap");
+			uploadUL.css("width", "600px").css("height", "150px");
+			uploadUL.css("flex-wrap", "wrap").css("display", "flex");
+			
 			let str = "";
 			//제이쿼리형으로 데이터를 변환하고 each로 인해 값을 하나하나 가져오게 됨
 			$(result).each( function (i, obj) {
@@ -85,6 +87,7 @@
 					str +="</li>";
 				}
 			});
+			$(".uploadResult ul li").css("margin", "0px 10px");
 			uploadUL.append(str);
 		}
 		//첨부파일 삭제
@@ -129,7 +132,16 @@
 		});
 		
 		//글 취소 버튼 클릭
-		
+		$(".reset").on("click", function (e) {
+			e.preventDefault();
+			console.log("reset click");
+			let formObj = $(".register_form");
+			formObj.empty();
+			formObj.find("")
+			formObj.attr("method", "get");
+			formObj.attr("action","/board/list")
+			formObj.submit();
+		});
 	});
 </script>
 <body>

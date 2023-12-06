@@ -53,6 +53,10 @@ read_table_title > thead > tr{
 	height: 350px;
 }
 
+.field1 {
+	margin-top: 20px;
+}
+
 .read_button {
 	margin: 30px 0px;
 }
@@ -64,7 +68,7 @@ read_table_title > thead > tr{
 	height: 35px;
 	font-size: 20px;
 	border: 0px;
-	margin-left: 25px;	
+	margin-right: 25px;	
 }
 
 #remove_btn {
@@ -74,7 +78,7 @@ read_table_title > thead > tr{
 	height: 35px;
 	font-size: 20px;
 	border: 0px;
-	margin-left: 25px;	
+	margin-right: 25px;	
 }
 
 #list_btn  {
@@ -83,6 +87,6 @@ read_table_title > thead > tr{
 	width: 100px;
 	height: 35px;
 	font-size: 20px;
-	margin-left: 25px;	
+	margin-right: 25px;	
 	border: 0px;
 }

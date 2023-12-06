@@ -73,18 +73,12 @@ ul {
 
 /* footer.jsp */
 
-.footer_write {
+.wrapper_footer {
 	width: 1000px;
 	text-align: left;
 	margin: 0px auto;
-	margin-top: 50px;
+
 }
 .list_item {
 	display: inline-flex;
-}
-
-.wrapper_footer > p {
-	width: 1000px;
-	margin: 0px auto;
-	text-align: left;
 }

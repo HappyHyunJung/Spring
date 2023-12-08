@@ -155,7 +155,7 @@
 			$("#finished").attr("disabled", true);
 			$("#finished").text("인증완료");
 			alert("인증이 완료되었습니다");
-			$("#signup__button").attr("style", "background-color: #FFFFFF; color: #2C3639; border: 1px solid #2C3639; cursor: pointer;");
+			$("#signup__button").attr("style", "background-color: blue; color: white; border: 1px solid #2C3639; cursor: pointer; font-weight: bolder;");
 			$("#signup__button").attr("disabled", false);
 			console.log("end");
 			

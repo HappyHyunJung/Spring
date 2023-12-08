@@ -25,12 +25,19 @@ public class NoticeServiceTests {
 	public void testRegister() {
 		NoticeVO vo = new NoticeVO();
 		vo.setNotice("NoticeService 테스트입니다");
-		vo.setNoticer("tester");
+		vo.setTitle("NoticeService");
 		noticeService.register(vo);
 	}
 	
-	@Test
+	//@Test
 	public void testGetList() {
 		noticeService.getList();
+	}
+	
+	@Test
+	public void testGet() {
+		long target = 1l;
+		NoticeVO vo = noticeService.get(target);
+		log.info("vo : " + vo);
 	}
 }

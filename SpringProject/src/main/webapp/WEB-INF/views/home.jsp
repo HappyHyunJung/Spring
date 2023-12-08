@@ -46,7 +46,7 @@
 			<div class="leftNav"><a href="#">채널예스</a></div>
 			<div class="leftNav"><a href="#">블로그</a></div>
 			<div class="leftNav"><a href="#">예스펀딩</a></div>
-			<div class="leftNav"><a href="#">공지사항</a></div>
+			<div class="leftNav"><a href="/notices/list">공지사항</a></div>
 			
 			<div class="rightNav">
 				<div class="rightElement"><a href="#">예사단독판매</a></div>
@@ -69,6 +69,5 @@
 		</div>
 		<img class="mainImg" src="/resources/img/homeBottom.png">
 	</main>
+	<%@include file="./includes/footer.jsp" %>	
 </div>
-
-<%@include file="./includes/footer.jsp" %>	

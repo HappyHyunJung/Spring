@@ -154,6 +154,7 @@ $(function () {
 		//console.log(str);
 		//console.log(replyUL);
 		replyUL.html(str);
+		
 	}
 	
 	replyPageFooter.on("click", "li a", function(e) {

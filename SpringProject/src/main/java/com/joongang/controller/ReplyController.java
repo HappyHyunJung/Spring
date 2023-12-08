@@ -30,16 +30,19 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class ReplyController {
 	private ReplyService replyService;
-	
+	// produces = {**} -> ** 해당 형태로 데이터를 보낸다
 	@GetMapping(value = "/pages/{bno}",
 			produces = {MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("bno") Long bno) {
+		// 리스트 형태로 가져온다 (json 형변환 알아서 해준다)
 		List<ReplyVO> list = replyService.getList(bno);
 		log.info("list : " + list);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
+	// consumes -> json 형으로 데이터가 들어오는 것을 처리한다
+	// produces (최종 결과물)String형으로 보내겠다
 	@PostMapping(value = "/new", consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> register(@RequestBody ReplyVO vo) {
@@ -57,7 +60,7 @@ public class ReplyController {
 		log.info("get : " + rno);
 		return new ResponseEntity<>(replyService.get(rno), HttpStatus.OK);
 	}
-	
+	// 댓글 수정
 	@PatchMapping(value = "/{rno}", consumes = "application/json", 
 			produces = {MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> modify (@RequestBody ReplyVO vo ,
@@ -67,7 +70,7 @@ public class ReplyController {
 		return replyService.modify(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+	// 댓글 삭제
 	@DeleteMapping(value = "/{rno}" ,produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> remove(@PathVariable("rno") Long rno) {
 		log.info("remove : " + rno);

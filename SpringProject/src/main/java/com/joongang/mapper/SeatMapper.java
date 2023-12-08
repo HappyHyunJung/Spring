@@ -12,4 +12,6 @@ public interface SeatMapper {
 	
 	public List<SeatVO> getResInfo(SeatVO vo);
 
+	public List<Integer> getSeatNo();
+
 }

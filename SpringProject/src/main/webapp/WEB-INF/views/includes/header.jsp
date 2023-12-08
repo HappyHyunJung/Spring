@@ -35,7 +35,7 @@
 							<a href = "/member/login"><span class="menu-item">로그인</span></a>
 						</c:when>
 						<c:otherwise>
-							<a href = "/member/signup"><span class="menu-item">회원가입</span></a>
+							<a href = "/seat/main"><span class="menu-item">좌석예약</span></a>
 							<a href="/member/logout"><span class="menu-item">로그아웃</span></a>
 						</c:otherwise>
 						</c:choose>					

@@ -45,15 +45,17 @@ public class BoardController {
 		public String registerForm() {
 			return "/board/registerForm";
 		}
-		// 게시물 등록
+		// 게시글 등록
 		@PostMapping("/register")
 		public String register(BoardVO vo, RedirectAttributes attr) {
 			boardService.register(vo);
 			attr.addFlashAttribute("result", vo.getBno());
 			return "redirect:/board/list";
 		}
-		
+		// 게시판 화면
+		// 페이징 기능 추가
 		@GetMapping("/list")
+		// criteria 변수 2개(pageNum, amount)를 가져온다
 		public String list (Criteria criteria, Model model) {
 			List<BoardVO> list = boardService.getList(criteria);
 			model.addAttribute("list", list);
@@ -62,20 +64,22 @@ public class BoardController {
 			log.info(list + "total: " + total + "  " + criteria.getListLink());
 			return "/board/list";
 		}
-		
+		// 게시글 상세보기
 		@GetMapping("/get")
 		public String get(Model model, @RequestParam("bno") Long bno, Criteria criteria) {
+			//쿼리를 통해 데이터가 넘어온다
 			BoardVO vo = boardService.get(bno);
+			// 프런트 엔드에서 쓰이는 키값
 			model.addAttribute("board", vo);
 			return "/board/get";
 		}
-		
+		// 게시글 수정화면
 		@GetMapping("/modify")
 		public String modify(@RequestParam("bno")Long bno, Criteria criteria, Model model) {
 			model.addAttribute("board", boardService.get(bno));
 			return "/board/modify";
 		}
-		
+		// 게시글 수정완료되면 동작
 		@PostMapping("/modify") 
 		public String modify(BoardVO vo, Criteria criteria, RedirectAttributes attr) { 
 			if (boardService.modify(vo)) {
@@ -87,7 +91,7 @@ public class BoardController {
 			attr.addAttribute("amount", criteria.getAmount());
 			return "redirect:/board/list";
 		}
-		
+		// 게시글 삭제
 		@PostMapping("/remove")
 		public String remove(@RequestParam("bno") Long bno, Criteria criteria, RedirectAttributes attr) throws IOException {
 			List<BoardAttachVO> attachList = boardService.getAttachList(bno);
@@ -100,7 +104,7 @@ public class BoardController {
 //			return "redirect:/board/list";
 			return "redirect:/board/list" + criteria.getListLink();
 		}
-		
+		// 첨부파일 삭제
 		private void deleteFiles(List<BoardAttachVO> attachList) throws IOException {
 			if(attachList == null || attachList.size() == 0) {
 				return;
@@ -120,7 +124,7 @@ public class BoardController {
 				}
 			}
 		}
-		
+		// 첨부파일 출력
 		@GetMapping(value = "/getAttachList/{bno}",
 				produces = MediaType.APPLICATION_JSON_VALUE)
 		@ResponseBody

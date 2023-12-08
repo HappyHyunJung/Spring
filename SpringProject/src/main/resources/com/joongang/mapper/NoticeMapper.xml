@@ -4,15 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.joongang.mapper.NoticeMapper">
 	<insert id="insert">
-		insert into tbl_notice (notice, noticer) 
-			values (#{notice}, #{noticer})
+		insert into tbl_notice (notice, title) 
+			values (#{notice}, #{title})
 	</insert>
 	
 	<select id="getList" resultType="com.joongang.domain.NoticeVO">
 		<![CDATA[
 			select /*+INDEX_DESC(TBL_NOTICE TBL_NOTICE_PK) */
-				rno, notice, noticer, regdate, updatedate
+				rno, notice, title, regdate, updatedate
 			from tbl_notice
 		]]>
+	</select>
+	
+	<select id="read" resultType="com.joongang.domain.NoticeVO">
+		select * from tbl_notice where rno = #{rno}
 	</select>
 </mapper>

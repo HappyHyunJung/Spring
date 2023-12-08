@@ -24,4 +24,8 @@ public class NoticeService {
 	public List<NoticeVO> getList() {
 		return noticeMapper.getList();
 	}
+
+	public NoticeVO get(Long rno) {
+		return noticeMapper.read(rno);
+	}
 }

@@ -48,7 +48,9 @@ public class SeatService {
 	}
 
 	public List<Integer> getSeatNo() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Integer> list = mapper.getSeatNo();
+		return list;
 	}
+	
+	
 }

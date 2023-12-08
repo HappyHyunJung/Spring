@@ -25,17 +25,24 @@ public class NoticeMapperTests {
 	//@Test
 	public void testInsert() {
 		NoticeVO vo = new NoticeVO();
-		vo.setNoticer("tester");
-		vo.setNotice("NoticeMapper3 테스트입니다.");
+		vo.setTitle("Mappertest");
+		vo.setNotice("NoticeMapper 테스트 코드입니다.");
 		noticeMapper.insert(vo);
 	}
 	
-	@Test
+	//@Test
 	public void testGetList() {
 		List<NoticeVO> notices = noticeMapper.getList();
 		//log.info(notices.size());
 		for(NoticeVO vo : notices) {
 			log.info("##" + vo);
 		}
+	}
+	
+	@Test
+	public void testRead() {
+		long targetrno = 3l;
+		NoticeVO vo = noticeMapper.read(targetrno);
+		log.info("vo : " + vo);
 	}
 }

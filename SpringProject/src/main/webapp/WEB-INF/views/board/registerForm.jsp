@@ -137,10 +137,7 @@
 			console.log("reset click");
 			let formObj = $(".register_form");
 			formObj.empty();
-			formObj.find("")
-			formObj.attr("method", "get");
-			formObj.attr("action","/board/list")
-			formObj.submit();
+			location.href = "/board/list";
 		});
 	});
 </script>

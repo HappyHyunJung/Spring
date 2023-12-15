@@ -13,6 +13,12 @@
 		$(".login_button").on("click", function (e) {
 			e.preventDefault();
 			if(isValid()) {
+				console.log($("#userid").val());
+				// 관리자로 로그인하면 관리자 페이지로 이동
+				if($("#userid").val() === "admin@admin.com") {
+					$("form").attr("method", "post");
+					$("form").attr("action", "/admin/header");
+				}
 				$("form").submit();
 			}
 		});
